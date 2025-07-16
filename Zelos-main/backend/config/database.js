@@ -34,15 +34,11 @@ async function readAll(table, where = null) {
 }
 
 // Função para ler um registro específico
-async function read(table, where) {
+async function read(table, whereClause, values = []) {
     const connection = await getConnection();
     try {
-        let sql = `SELECT * FROM ${table}`;
-        if (where) {
-            sql += ` WHERE ${where}`;
-        }
-
-        const [rows] = await connection.execute(sql);
+        const sql = `SELECT * FROM ${table} WHERE ${whereClause}`;
+        const [rows] = await connection.execute(sql, values);
         return rows[0] || null;
     } finally {
         connection.release();

@@ -1,35 +1,34 @@
+import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken';
-import { read, compare } from '../config/database.js';
+import { db } from '../config/database.js';
 import { JWT_SECRET } from '../config/jwt.js'; // Importar a chave secreta
 
-const loginController = async (req, res) => {
-  const { email, senha } = req.body;
+export const loginController = async (req, res) => {
+  const { cpf, senha, tipo } = req.body;
 
   try {
-    // Verificar se o usuário existe no banco de dados
-    const usuario = await read('usuarios', `email = '${email}'`);
+    const [rows] = await db.query('SELECT * FROM usuarios WHERE cpf = ? AND tipo ?', [cpf, tipo]);
+    const usuario = rows[0];
 
     if (!usuario) {
-      return res.status(404).json({ mensagem: 'Usuário não encontrado' });
+      return res.status(404).json({ mensagem: `${tipo} não encontrado` });
     }
 
     // Verificar se a senha está correta (comparar a senha enviada com o hash armazenado)
-    const senhaCorreta = await compare(senha, usuario.senha);
-
+    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
     if (!senhaCorreta) {
       return res.status(401).json({ mensagem: 'Senha incorreta' });
     }
 
     // Gerar o token JWT
-    const token = jwt.sign({ id: usuario.id, tipo: usuario.tipo }, JWT_SECRET, {
-      expiresIn: '1h',
-    });
+    const token = jwt.sign({ id: usuario.id, cpf: usuario.cpf, tipo });
 
-    res.json({ mensagem: 'Login realizado com sucesso', token });
-  } catch (error) {
-    console.error('Erro ao fazer login:', error);
-    res.status(500).json({ mensagem: 'Erro ao fazer login' });
+    return res.status(200).json({
+      message: `Login de ${tipo} efetuado com sucesso.`,
+      token,
+    });
+  } catch (err) {
+    console.error("Erro ao efetuar login:", err);
+    return res.status(500).json({message: 'Erro interno ao efetuar login.'});
   }
 };
-
-export { loginController };
