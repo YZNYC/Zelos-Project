@@ -38,7 +38,7 @@ O sistema permite:
  
  - Criar e definir os tipos de usuários (Admin, Técnico, Solicitante)
 
-0 Finalizar todos os Controllers (CRUD completo para todas as entidades)
+ - 0 Finalizar todos os Controllers (CRUD completo para todas as entidades)
 
  - Corrigir e validar todos os Middlewares
 
