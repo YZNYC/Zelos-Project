@@ -32,7 +32,7 @@
         tipo_id INT,
         tecnico_id INT,
         usuario_id INT,
-        status ENUM('pendente', 'em andamento', 'concluído') DEFAULT 'pendente',
+        status ENUM('pendente', 'em andamento', 'concluído', 'cancelado') DEFAULT 'pendente',
         criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (tipo_id) REFERENCES pool(id),
