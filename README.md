@@ -9,12 +9,7 @@ Este é um projeto de sistema de chamados interno, desenvolvido para a **Escola 
 
 - [📌 Sobre o Projeto](#-sobre-o-projeto)
 - [🧰 Tecnologias Utilizadas](#-tecnologias-utilizadas)
-- [🚀 Como Iniciar](#-como-iniciar)
-- [📁 Estrutura de Diretórios](#-estrutura-de-diretórios)
-- [🗄️ Banco de Dados](#-banco-de-dados)
-- [⚙️ Em Desenvolvimento](#-em-desenvolvimento)
-- [🔐 Integração com Active Directory](#-integração-com-active-directory)
-- [📄 Licença](#-licença)
+- [📌 Tarefas Pendentes](#-tarefas-pendentes)
 
 ---
 
@@ -39,8 +34,32 @@ O sistema permite:
 
 ---
 
-## 🚀 Como Iniciar
+## 📌 Tarefas Pendentes
+ 
+ - Criar e definir os tipos de usuários (Admin, Técnico, Solicitante)
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/seu-usuario/sistema-chamados.git
+0 Finalizar todos os Controllers (CRUD completo para todas as entidades)
+
+ - Corrigir e validar todos os Middlewares
+
+ - Implementar autenticação completa
+
+ - Concluir o desenvolvimento do Frontend em Next.js
+
+ - Tela de login
+
+ - Cadastro de chamados
+
+ - Painel de técnico
+
+ - Histórico de chamados
+
+ - Implementar tratamento de erros e logs
+
+ - Adicionar testes básicos no backend (opcional)
+
+ - Documentar a API com Swagger ou alternativa simples
+
+ - Configurar integração com Active Directory
+
+ - Adicionar controle de status dos chamados (ex: aberto, em andamento, concluído)
