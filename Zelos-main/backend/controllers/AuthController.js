@@ -1,34 +1,101 @@
-import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken';
-import { db } from '../config/database.js';
+import { read, compare } from '../config/database.js';
 import { JWT_SECRET } from '../config/jwt.js'; // Importar a chave secreta
+import bcrypt from '../hashPassword.js';
 
-export const loginController = async (req, res) => {
-  const { cpf, senha, tipo } = req.body;
+const loginAdminController = async (req, res) => {
+  const { email, senha } = req.body;
 
   try {
-    const [rows] = await db.query('SELECT * FROM usuarios WHERE cpf = ? AND tipo ?', [cpf, tipo]);
-    const usuario = rows[0];
+    // Verificar se o usuário existe no banco de dados
+    const usuario = await read('usuarios', `email = '${email}'`);
 
     if (!usuario) {
-      return res.status(404).json({ mensagem: `${tipo} não encontrado` });
+      return res.status(404).json({ mensagem: 'Usuário não encontrado' });
     }
 
     // Verificar se a senha está correta (comparar a senha enviada com o hash armazenado)
-    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
+    const senhaCorreta = await compare(senha, usuario.senha);
+
     if (!senhaCorreta) {
       return res.status(401).json({ mensagem: 'Senha incorreta' });
     }
 
     // Gerar o token JWT
-    const token = jwt.sign({ id: usuario.id, cpf: usuario.cpf, tipo });
+    const token = jwt.sign({ id: usuario.id, tipo: usuario.tipo }, JWT_SECRET, {
+      expiresIn: '1h',
+    }); 
 
-    return res.status(200).json({
-      message: `Login de ${tipo} efetuado com sucesso.`,
-      token,
-    });
-  } catch (err) {
-    console.error("Erro ao efetuar login:", err);
-    return res.status(500).json({message: 'Erro interno ao efetuar login.'});
+    res.json({ mensagem: 'Login realizado com sucesso', token });
+  } catch (error) {
+    console.error('Erro ao fazer login:', error);
+    res.status(500).json({ mensagem: 'Erro ao fazer login' });
   }
 };
+
+export { loginController };
+
+
+// const loginUsuarioController = async (req, res) => {
+//   const { email, senha } = req.body;
+
+//   try {
+//     // Verificar se o usuário existe no banco de dados
+//     const usuario = await read('usuarios', `email = '${email}'`);
+
+//     if (!usuario) {
+//       return res.status(404).json({ mensagem: 'Usuário não encontrado' });
+//     }
+
+//     // Verificar se a senha está correta (comparar a senha enviada com o hash armazenado)
+//     const senhaCorreta = await compare(senha, usuario.senha);
+
+//     if (!senhaCorreta) {
+//       return res.status(401).json({ mensagem: 'Senha incorreta' });
+//     }
+
+//     // Gerar o token JWT
+//     const token = jwt.sign({ id: usuario.id, tipo: usuario.tipo }, JWT_SECRET, {
+//       expiresIn: '1h',
+//     }); 
+
+//     res.json({ mensagem: 'Login realizado com sucesso', token });
+//   } catch (error) {
+//     console.error('Erro ao fazer login:', error);
+//     res.status(500).json({ mensagem: 'Erro ao fazer login' });
+//   }
+// };
+
+// export { loginController };
+
+// const loginTEcniController = async (req, res) => {
+//   const { email, senha } = req.body;
+
+//   try {
+//     // Verificar se o usuário existe no banco de dados
+//     const usuario = await read('usuarios', `email = '${email}'`);
+
+//     if (!usuario) {
+//       return res.status(404).json({ mensagem: 'Usuário não encontrado' });
+//     }
+
+//     // Verificar se a senha está correta (comparar a senha enviada com o hash armazenado)
+//     const senhaCorreta = await compare(senha, usuario.senha);
+
+//     if (!senhaCorreta) {
+//       return res.status(401).json({ mensagem: 'Senha incorreta' });
+//     }
+
+//     // Gerar o token JWT
+//     const token = jwt.sign({ id: usuario.id, tipo: usuario.tipo }, JWT_SECRET, {
+//       expiresIn: '1h',
+//     }); 
+
+//     res.json({ mensagem: 'Login realizado com sucesso', token });
+//   } catch (error) {
+//     console.error('Erro ao fazer login:', error);
+//     res.status(500).json({ mensagem: 'Erro ao fazer login' });
+//   }
+// };
+
+// export { loginController };
