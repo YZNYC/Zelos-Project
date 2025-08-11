@@ -1,95 +1,160 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client"
 
-export default function Home() {
+import { useEffect, useRef } from 'react';
+
+function ParticleBackground() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    let w = (canvas.width = window.innerWidth);
+    let h = (canvas.height = window.innerHeight);
+
+    const particles = [];
+    const num = 130;
+    const maxDist = 140;
+
+    class P {
+      constructor() {
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        this.vx = (Math.random() - 0.3) * 2.0;
+        this.vy = (Math.random() - 0.3) * 2.0;
+        this.r = 2 + Math.random() * 2;
+      }
+      move() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > w) this.vx *= -1;
+        if (this.y < 0 || this.y > h) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(230,0,0,0.8)';
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < num; i++) particles.push(new P());
+
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      particles.forEach((p) => {
+        p.move();
+        p.draw();
+      });
+      for (let i = 0; i < num; i++) {
+        for (let j = i + 1; j < num; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < maxDist) {
+            const a = 1 - dist / maxDist;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(230,0,0,${a * 0.7})`;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    function handleResize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        zIndex: 10,
+        width: '100vw',
+        height: '100vh',
+        display: 'block',
+      }}
+    />
+  );
+}
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+export default function LoginPage() {
+  return (
+    <main className="relative min-h-screen flex items-center justify-center overflow-hidden text-white font-sans bg-cover bg-center">
+
+      {/* Logos fixas no topo esquerdo */}
+      <div className="fixed top-0 left-20 flex items-center gap-12 mt-[-40] z-40  rounded-br-lg">
+        <img src="/senai-logo.png" alt="Logo SENAI" className="h-70 object-contain" />
+        <img src="/zelos-logo.png" alt="Logo Zelos" className="h-40 object-contain" />
+      </div>
+
+      {/* Fundo da página */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/BG.jpeg')" }}
+      />
+
+      <ParticleBackground />
+
+      {/* Conteúdo do login */}
+      <section className="relative bg-black/70 p-10 rounded-lg max-w-sm w-full text-center shadow-xl z-20">
+        <h1 className="text-3xl font-bold mb-8">Login</h1>
+
+        <form className="flex flex-col gap-4 text-left">
+          <label className="font-semibold" htmlFor="email">
+            Email:
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Digite seu email"
+            className="rounded px-3 py-2 bg-black/90 border border-gray-700 focus:border-red-600 outline-none"
+          />
+
+          <label className="font-semibold" htmlFor="senha">
+            Senha:
+          </label>
+          <input
+            id="senha"
+            type="password"
+            placeholder="Digite sua senha"
+            className="rounded px-3 py-2 bg-black/90 border border-gray-700 focus:border-red-600 outline-none"
+          />
+
+          <a href="#" className="text-red-500 text-sm self-end hover:underline">
+            Esqueceu sua <strong>senha?</strong>
           </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
+
+          <button
+            type="submit"
+            className="bg-black/90 border border-white rounded py-2 mt-4 hover:bg-red-700 transition cursor-pointer"
           >
-            Read our docs
+            Entrar
+          </button>
+        </form>
+
+        <p className="text-red-500 text-sm mt-6">
+          Não tem login?{' '}
+          <a href="#" className="underline hover:text-red-700">
+            <strong>cadastre-se</strong>
           </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        </p>
+      </section>
+    </main>
   );
 }
