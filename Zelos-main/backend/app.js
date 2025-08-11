@@ -41,7 +41,6 @@ try {
 
 // 5. Rotas
 app.use('/auth', authRotas);
-
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'online' });
 });
