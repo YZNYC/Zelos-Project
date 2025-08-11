@@ -21,7 +21,6 @@ app.use(express.json());
 // app.use(passport.session());
 
 app.use('/auth', authRotas);
-
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'online' });
 });
