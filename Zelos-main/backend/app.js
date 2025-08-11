@@ -9,7 +9,7 @@ const app = express();
 const porta = process.env.PORT || 8080;
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'http://localhost:3001',
   credentials: true
 }));
 

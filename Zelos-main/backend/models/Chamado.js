@@ -1,6 +1,6 @@
 import { create, readAll, read, update, deleteRecord } from '../config/database.js';
 
-const listarChamados = async () => {
+const relatórios = async () => {
   try {
     return await readAll('chamados');
   } catch (error) {
@@ -9,7 +9,7 @@ const listarChamados = async () => {
   }
 };
 
-const obterChamadosPorId = async (id) => {
+const acompanharChamado = async (id) => {
   try {
     return await read('chamados', `id = ?`, [id]);
   } catch (error) {
@@ -45,4 +45,4 @@ const excluirChamado = async (id) => {
   }
 };
 
-export { listarChamados, obterChamadosPorId, criarChamado, atualizarChamado, excluirChamado };
+export { relatórios, acompanharChamado, criarChamado, atualizarChamado, excluirChamado };

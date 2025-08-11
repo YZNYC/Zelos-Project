@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "next": "^15.4.6",
     "sqlite3": "^5.1.7"
   }
 }
