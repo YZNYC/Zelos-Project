@@ -110,7 +110,7 @@ async function compare(senha, hash) {
         return await bcrypt.compare(senha, hash);
     } catch (error) {
         console.error('Erro ao comparar a senha com o hash:', error);
-        return false; // Em caso de erro, retorne falso para indicar que a senha não corresponde
+        return false;
     }
 }
 
