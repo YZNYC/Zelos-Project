@@ -1,10 +1,12 @@
 "use client"
 
 import { useEffect, useRef } from 'react';
+import Link from 'next/link';
 
 function ParticleBackground() {
   const canvasRef = useRef(null);
 
+  // código das partículas
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -97,21 +99,21 @@ export default function LoginPage() {
   return (
     <main className="relative min-h-screen flex items-center justify-center overflow-hidden text-white font-sans bg-cover bg-center">
 
-      {/* Logos fixas no topo esquerdo */}
-      <div className="fixed top-0 left-20 flex items-center gap-12 mt-[-40] z-40  rounded-br-lg">
+      {/* Logos*/}
+      <div className="fixed top-0 left-20 flex items-center mt-[-40] z-40  rounded-br-lg">
         <img src="/senai-logo.png" alt="Logo SENAI" className="h-70 object-contain" />
         <img src="/zelos-logo.png" alt="Logo Zelos" className="h-40 object-contain" />
       </div>
 
-      {/* Fundo da página */}
+      {/*BG de gundo*/}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/BG.jpeg')" }}
       />
-
+{/* Partículas */}
       <ParticleBackground />
 
-      {/* Conteúdo do login */}
+      {/* Form do login */}
       <section className="relative bg-black/70 p-10 rounded-lg max-w-sm w-full text-center shadow-xl z-20">
         <h1 className="text-3xl font-bold mb-8">Login</h1>
 
@@ -140,12 +142,12 @@ export default function LoginPage() {
             Esqueceu sua <strong>senha?</strong>
           </a>
 
-          <button
+          <Link href="/dashBoard"><button
             type="submit"
-            className="bg-black/90 border border-white rounded py-2 mt-4 hover:bg-red-700 transition cursor-pointer"
+            className="bg-black/90 border border-white rounded w-75 py-2 mt-4 hover:bg-red-700 transition cursor-pointer"
           >
             Entrar
-          </button>
+          </button></Link>
         </form>
 
         <p className="text-red-500 text-sm mt-6">
