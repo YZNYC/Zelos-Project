@@ -11,7 +11,7 @@ export default function Header() {
     h-[165px]  
   `}
   style={{ backgroundColor: '#ED1C24'}}>
-  <img src="/Zelos-Logo-Header.png" alt="Logo" className="w-120 h-160 mt-[-90px] ml-[-80px]" />
+  <img src="/Zelos-Logo-Header.png" alt="Logo" className="w-120 h-160 mt-[-90px] ml-[-50px]" />
             </div>
           
         </nav>
