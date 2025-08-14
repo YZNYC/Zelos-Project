@@ -1,38 +1,43 @@
-import { create, readAll, read, update, deleteRecord} from '../config/database.js';
+import { create, readAll, read, update, deleteRecord } from '../config/database.js';
 
-// Listar todos os usuaios
-async function listarUsuarios() {
-    return await readAll('usuarios')
+// Listar usuarios
+async function listarUsuariosModel() {
+    return await readAll('usuarios');
 };
 
-// Listar usuarios por id
-async function listarUsuariosid(id) {
-    return await read('usuarios', `id = ${id}`)
+// Listar usuario ID
+async function listarUsuariosIdModel(id) {
+    return await read('usuarios', 'id = ?', [id])
 };
 
-// Criar um novo Usuario
-async function criarUsuarios() {
-    return await create('usuarios')
+// Criar usuario
+async function criarUsuarioModel(data) {
+    return await create('usuarios', data)
 };
 
-// Criar Chamado
-async function criarChamado(data) {
-    return await create('chamados', data);
-}
-
-// Atualizar Status do Chmado
-async function atualizarChamado(id, data) {
-    return await update('chamados', data, `id = ${id}`)
+// Criar chamado
+async function criarChamadoModel(data) {
+    return await create('chamados', data)
 };
 
-// Listar Chamado
-async function listarChamados(id) {
-    return await readAll('chamados', `usuario_id = ${id}`);
-}
+// Atualizar chmado
+async function atualizarChamadoModel(id, data) {
+    return await update('chamados', data, 'id = ?', [id])
+};
 
-// Deletar Chamado
-async function deletarChamado(id) {
-    return await deleteRecord('chamados', `id = ${id}`)
-}
+//Listar chamado
+async function listarChamadosModel() {
+    return await readAll ('chamados')
+};
 
-export default { listarUsuarios, listarUsuariosid, criarUsuarios, criarChamado, listarChamados, deletarChamado, atualizarChamado };
+// Listar chamado id
+async function listarChamadosIdModel(id) {
+    return await read('chamados', 'usuario_id = ?', [id])
+};
+
+// Deletar chamado
+async function deletarChamadoModel(id) {
+    return await deleteRecord('chamados', 'id = ?', [id])
+};
+
+export default { listarUsuariosModel, listarUsuariosIdModel, criarUsuarioModel, criarChamadoModel, listarChamadosModel, listarChamadosIdModel, deletarChamadoModel, atualizarChamadoModel };
