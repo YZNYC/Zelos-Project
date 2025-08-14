@@ -75,17 +75,14 @@ async function create(table, data) {
 }
 
 // Função para atualizar um registro
-async function update(table, data, where) {
+async function update(table, data, whereClause, values = []) {
     const connection = await getConnection();
     try {
         const set = Object.keys(data)
             .map(column => `${column} = ?`)
             .join(', ');
-
-        const sql = `UPDATE ${table} SET ${set} WHERE ${where}`;
-        const values = Object.values(data);
-
-        const [result] = await connection.execute(sql, [...values]);
+        const sql = `UPDATE ${table} SET ${set} WHERE ${whereClause}`;
+        const [result] = await connection.execute(sql, [...Object.values(data), ...values]);
         return result.affectedRows;
     } finally {
         connection.release();
@@ -93,17 +90,18 @@ async function update(table, data, where) {
 }
 
 // Função para excluir um registro
-async function deleteRecord(table, where) {
+async function deleteRecord(table, whereClause, values = []) {
     const connection = await getConnection();
     try {
-        const sql = `DELETE FROM ${table} WHERE ${where}`;
-        const [result] = await connection.execute(sql);
+        const sql = `DELETE FROM ${table} WHERE ${whereClause}`;
+        const [result] = await connection.execute(sql, values);
         return result.affectedRows;
     } finally {
         connection.release();
     }
 }
 
+// Funçao de comparar
 async function compare(senha, hash) {
     try {
         // Compare a senha com o hash usando bcrypt

@@ -14,7 +14,7 @@ export async function listarUsuariosController(req, res) {
 export async function listarUsuarioIdController(req, res) {
     const { id } = req.params;
     try {
-        const usuario = await model.listarUsuarioPorIdModel(id);
+        const usuario = await model.listarUsuariosIdModel(id);
         if (!usuario) {
             return res.status(404).json({ error: 'Usuario não encontrado.' });
         }
@@ -78,16 +78,26 @@ export async function listarChamadosController(req, res) {
 export async function listarChamadoIdController(req, res) {
     const { id } = req.params;
     try {
-        const chamado = await model.listarChamadoPorIdModel(id);
+        const chamado = await model.listarChamadosIdModel(id);
         if (!chamado) {
             return res.status(404).json({ error: 'Chamado não encontrado.' });
         }
-        res.status(200).json(usuario);
+        res.status(200).json(chamado);
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar Chamado pelo ID.' });
     }
 };
 
-
-
-
+// Deletar chamado
+export async function deletarChamadoController(req, res) {
+    const { id } = req.params;
+    try {
+        const resultado = await model.deletarChamadoModel(id);
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({ error: 'Chamado não encontrado.' });
+        }
+        res.status(200).json({ message: 'Chamado deletado com sucesso.' });
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao deletar o chamado.' });
+    }
+};
