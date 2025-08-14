@@ -11,7 +11,7 @@ export async function listarUsuariosController(req, res) {
 };
 
 // Listar usuario Id
-export async function listarUsuario IdController(req, res) {
+export async function listarUsuarioIdController(req, res) {
     const { id } = req.params;
     try {
         const usuario = await model.listarUsuarioPorIdModel(id);
