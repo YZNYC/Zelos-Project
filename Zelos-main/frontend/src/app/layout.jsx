@@ -1,5 +1,4 @@
 import { Geist, Geist_Mono, Barlow } from "next/font/google";
-import Header from "./Components/Header/Header";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,7 +26,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${barlow.variable}`}>
+      <body className={`${barlow.variable}`}>
         {children}
       </body>
     </html>
