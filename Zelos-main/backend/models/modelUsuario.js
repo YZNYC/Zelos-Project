@@ -1,14 +1,14 @@
 import { create, readAll } from "../config/database.js"
 
 
-// Criar Chamado
-async function criarChamado(data) {
-    return await create('chamados', data);
-}
+// Criar chamado
+async function criarChamadoModel(data) {
+    return await create('chamados', data)
+};
 
-// listar Chamado
-async function listarChamados(id) {
-    return await readAll('chamados', `usuario_id = ${id}`);
-}
+// Listar chamado id
+async function listarChamadosIdModel(id) {
+    return await read('chamados', 'usuario_id = ?', [id])
+};
 
-export default { criarChamado, listarChamados };
+export default { criarChamadoModel, listarChamadosIdModel };
