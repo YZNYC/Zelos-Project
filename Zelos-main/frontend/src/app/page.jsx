@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Header from './Components/HeaderLogin/Header';
 
 function ParticleBackground() {
   const canvasRef = useRef(null);
@@ -100,21 +101,39 @@ export default function LoginPage() {
     <main className="relative min-h-screen flex items-center justify-center overflow-hidden text-white font-sans bg-cover bg-center">
 
       {/* Logos*/}
-      <div className="fixed top-0 left-20 flex items-center mt-[-40] z-40  rounded-br-lg">
-        <img src="/senai-logo.png" alt="Logo SENAI" className="h-70 object-contain" />
-        <img src="/zelos-logo.png" alt="Logo Zelos" className="h-40 object-contain" />
+      <div className="fixed top-0 left-10 flex items-center mt-[-40] z-40 rounded-br-lg">
+        <img src="/senai-logo.png"
+          alt="Logo SENAI"
+          className="h-60 object-contain hidden lg:flex" />
+        <img src="/zelos-logo.png"
+          alt="Logo Zelos"
+          className="h-40 object-contain hidden lg:flex" />
+      </div>
+      {/* Header apenas mobile/tablet */}
+
+      {/* Header apenas mobile/tablet, fixo e transparente */}
+      <div className="lg:hidden fixed top-0 left-0 w-full z-20 flex mt-[-20px] justify-center">
+        <Header />
       </div>
 
-      {/*BG de gundo*/}
+
+
+      {/* BG de fundo */}
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center hidden lg:block"
         style={{ backgroundImage: "url('/BG.jpeg')" }}
       />
-{/* Partículas */}
-      <ParticleBackground />
 
+      {/* Partículas */}
+      <div className="hidden lg:block">
+        <ParticleBackground />
+      </div>
+      <div
+        className="absolute inset-0 bg-cover bg-center sm:block lg:hidden"
+        style={{ backgroundColor: "#2C2C2C" }}
+      />
       {/* Form do login */}
-      <section className="relative bg-black/70 p-10 rounded-lg max-w-sm w-full text-center shadow-xl z-20">
+      <section className="relative bg-black/70 p-10 rounded-lg max-w-sm w-full text-center shadow-xl z-20 w-[90%] sm:max-w-sm">
         <h1 className="text-3xl font-bold mb-8">Login</h1>
 
         <form className="flex flex-col gap-4 text-left">
