@@ -3,21 +3,10 @@
 import { useState } from "react";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'; 
-import { IoLogOut } from "react-icons/io5";
+
 
 export default function Sidebar() {
     const router = useRouter();
-
-  const handleLogout = () => {
-   
-    // removendo 
-  localStorage.removeItem('authToken');
-  localStorage.removeItem('userRole'); 
-  toast.success('Logout realizado com sucesso!');
-  
-  // redirecionando
-  router.push('/login');
-};
 
   const menus = [
     { title: "Visão geral", link: "./dashBoard" },
@@ -62,16 +51,8 @@ export default function Sidebar() {
         </ul>
       </div>
 
-      <div className="pb-4">
-        <li
-          title={"Logout"}
-          className="flex items-center gap-4 cursor-pointer text-red-400 text-sm p-2 rounded-md duration-200 hover:bg-red-500 hover:text-white"
-
-          onClick={handleLogout}
-        >
-          <span className="text-xl"><IoLogOut /></span>
-          <span className={`text-base duration-200`}>Logout</span>
-        </li>
+      <div className="flex justify-center items-center ">
+          <span className="text-md text-white text-center"><strong>Zelos © 2025 - Escola SENAI <br></br> Armando de Arruda Pereira</strong></span>
       </div>
     </div>
   );
