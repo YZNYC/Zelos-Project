@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Header from './Components/HeaderLogin/Header';
+import Header from './Components/Layout/HeaderLogin/Header';
 
 function ParticleBackground() {
   const canvasRef = useRef(null);
