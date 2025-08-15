@@ -1,3 +1,6 @@
+"use client";
+
+// Componente base de card: padroniza raio, sombra e paddings
 export default function CardShell({ title, className = "", children, right }) {
   return (
     <div className={`bg-white rounded-2xl shadow-[0_10px_25px_rgba(0,0,0,0.08)] p-5 ${className}`}>

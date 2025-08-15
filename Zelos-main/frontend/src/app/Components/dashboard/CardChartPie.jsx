@@ -1,4 +1,5 @@
 "use client";
+
 import CardShell from "./CardShell";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
@@ -9,11 +10,11 @@ export default function CardChartPie({
   data = [],
 }) {
   return (
-    <CardShell title={title} className="h-[320px]">
-      <div className="h-[260px] flex">
-        {/* gráfico à esquerda */}
-        <div className="flex-[2] flex items-center justify-center">
-          <ResponsiveContainer width="100%" height="90%">
+    <CardShell title={title} className="h-auto">
+      <div className="flex flex-col md:flex-row h-full">
+        {/* gráfico */}
+        <div className="w-full md:flex-[2] flex items-center justify-center h-[250px] md:h-[320px]">
+          <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={data}
@@ -31,8 +32,8 @@ export default function CardChartPie({
           </ResponsiveContainer>
         </div>
 
-        {/* legenda à direita, dentro do card */}
-        <div className="flex-[1] pl-4 flex flex-col justify-center gap-3">
+        {/* legenda */}
+        <div className="w-full md:flex-[1] flex md:flex-col justify-center items-center md:items-start gap-4 p-4">
           {data.map((d, i) => (
             <div key={i} className="flex items-center gap-2">
               <span

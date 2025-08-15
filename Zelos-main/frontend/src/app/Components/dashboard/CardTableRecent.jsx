@@ -2,13 +2,9 @@
 import CardShell from "./CardShell";
 
 // rows: [{ protocolo, descricao, status, dataAbertura, tecnico }]
-export default function CardTableRecent({
-  title = "Chamados recentes",
-  rows = [],
-}) {
+export default function CardTableRecent({ title = "Chamados recentes", rows = [] }) {
   return (
     <CardShell title={title} className="h-[460px]">
-      {/* scroll só dentro do card */}
       <div className="h-[380px] overflow-y-auto pr-2">
         <table className="w-full text-sm">
           <thead className="sticky top-0 bg-white z-10">
@@ -22,7 +18,7 @@ export default function CardTableRecent({
           </thead>
           <tbody>
             {rows.map((r, i) => (
-              <tr key={i} className="border-b last:border-0">
+              <tr key={i} className="border-b last:border-0 hover:bg-gray-50">
                 <td className="py-2 font-medium text-gray-800">{r.protocolo}</td>
                 <td className="py-2 text-gray-700">{r.descricao}</td>
                 <td className="py-2">
