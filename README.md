@@ -1,65 +1,118 @@
-# Zelos-Project
-## 🛠️ Sistema de Chamados - Escola SENAI Armando de Arruda Pereira
+# Zelos - Sistema de Chamados
 
-Este é um projeto de sistema de chamados interno, desenvolvido para a **Escola SENAI Armando de Arruda Pereira**, com o objetivo de gerenciar solicitações de manutenção, apoio técnico e serviços diversos, com base no número de patrimônio dos itens escolares.
+## 📝 Descrição do Projeto
 
----
+O Zelos é um sistema de gerenciamento de chamados em desenvolvimento, voltado para controle de atendimento e acompanhamento de solicitações de forma intuitiva e visualmente agradável, para suprir as necessidades apontadas pelo SENAI Armando Arruda de Pereira em um controle dos chamados de manutenção e derivados.
 
-## 📚 Índice
+O projeto está sendo construído com Next.js no frontend e Express.js + MySQL no backend, com foco em modularidade, responsividade e integração fluida entre front e back.
 
-- [📌 Sobre o Projeto](#-sobre-o-projeto)
-- [🧰 Tecnologias Utilizadas](#-tecnologias-utilizadas)
-- [📌 Tarefas Pendentes](#-tarefas-pendentes)
 
----
+## ⚙️ Tecnologias Utilizadas
 
-## 📌 Sobre o Projeto
+Frontend:
+Next.js 13 (App Router)
 
-O sistema permite:
-- Registro de chamados de manutenção e serviços técnicos.
-- Identificação dos itens através do número de patrimônio da escola.
-- Acompanhamento dos chamados por técnicos.
-- Apontamentos de progresso e status.
-- Histórico completo de serviços realizados.
+Tailwind CSS (estilização responsiva)
 
----
+Recharts (gráficos)
 
-## 🧰 Tecnologias Utilizadas
+React (componentização)
 
-- **Frontend:** Next.js (React)
-- **Backend:** Node.js (Express)
-- **Banco de Dados:** MySQL
-- **Autenticação:** (em desenvolvimento)
-- **Middlewares personalizados:** (parcialmente implementados)
+Design adaptado para desktop, tablet e mobile
 
----
+Efeitos visuais: transições suaves, menus laterais, cards interativos 3D
 
-## 📌 Tarefas Pendentes
- 
- - Criar e definir os tipos de usuários (Admin, Técnico, Solicitante)
+Backend:
+Node.js + Express.js
 
- - 0 Finalizar todos os Controllers (CRUD completo para todas as entidades)
+MySQL (via mysql2)
 
- - Corrigir e validar todos os Middlewares
+Autenticação simples e log de acessos
 
- - Implementar autenticação completa
+Estrutura de CRUD para gerenciamento de clientes, produtos, pedidos e itens de pedido
 
- - Concluir o desenvolvimento do Frontend em Next.js
+Integração com frontend via API REST
 
- - Tela de login
+## 🏗 Status do Projeto
 
- - Cadastro de chamados
+✅ Já Implementado:
+Frontend:
 
- - Painel de técnico
+Estrutura de páginas com Next.js
 
- - Histórico de chamados
+Layout responsivo com Tailwind
 
- - Implementar tratamento de erros e logs
+Cards de dashboard e gráficos (pie chart e line chart) funcionando visualmente
 
- - Adicionar testes básicos no backend (opcional)
+Menu lateral e cabeçalho fixo
 
- - Documentar a API com Swagger ou alternativa simples
+Backend:
 
- - Configurar integração com Active Directory
+Configuração do Express + MySQL
 
- - Adicionar controle de status dos chamados (ex: aberto, em andamento, concluído)
+Conexão com banco de dados estabelecida
+
+Tabelas básicas criadas (clientes, produtos, pedidos, itens_pedido)
+
+Integração básica frontend ↔ backend via Axios
+
+Autenticação simples de usuário
+
+CLI de teste para interagir com o backend (via Inquirer + Axios + Chalk)
+
+## ⚙ Em andamento:
+
+Backend:
+
+Rotas completas para CRUD ainda incompletas
+
+Tratamento de relações entre tabelas e foreign keys
+
+Integração completa com frontend ainda pendente
+
+Logs de acesso e segurança básica
+
+Frontend:
+
+Ajustes finais em gráficos (line chart precisa gerar valores altos sempre, pie chart dimensionamento)
+
+Correção de bugs de atualização e remoção de dados no cliente CLI
+
+Transições e efeitos visuais mais refinados
+
+Responsividade:
+
+Ajustes finos no header, textos e partículas no mobile/tablet
+
+## ⏳ Pendências:
+
+Finalizar backend:
+
+CRUD completo com validação e tratamento de erros
+
+Rotas de autenticação mais robustas
+
+Integração com frontend
+
+Frontend:
+
+Finalizar todos os gráficos do dashboard
+
+Cards 3D totalmente interativos
+
+Menus laterais com navegação completa
+
+Efeitos visuais adicionais (transições, hover, etc.)
+
+Documentação do código e README final
+
+Testes (unitários e integração)
+
+Possível evolução futura:
+
+Integração com Electron para versão desktop
+
+Dashboard de gerenciamento completo de guerreiros/recursos fictícios
+
+Sistema de notificações em tempo real
+
