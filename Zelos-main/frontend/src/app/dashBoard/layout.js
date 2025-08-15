@@ -1,17 +1,17 @@
-'use client';
+"use client";
+import { useState } from "react";
+import Sidebar from "../Components/Layout/Sidebar/Sidebar";
+import Header from "../Components/Layout/Header/Header";
 
-import Sidebar from "../Components/Sidebar/Sidebar";
-import Header from "../Components/Header/Header";
+export default function Layout({ children }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-
-export default function DashboardLayout({ children }) {
   return (
-    <div className="flex h-screen">
-         <Header/>
-      <Sidebar/>
-      <main className="flex-1 overflow-hidden">
-        {children}
-      </main>
+    <div>
+      <Header onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      {/* Mantém margem esquerda só para desktop */}
+      <main className="pt-[88px] ml-0 sm:ml-[22.5rem]">{children}</main>
     </div>
   );
 }

@@ -11,10 +11,7 @@ import {
   genRecentRows,
 } from "../lib/mockDashBoardData";
 
-
 export default function dashBoard() {
-  // ===== MOCK: gere dados aleatórios a cada render =====
-  // TODO: Substituir por dados reais vindos do seu backend.
   const [counters, setCounters] = useState(null);
   const [pieData, setPieData] = useState([]);
   const [lineData, setLineData] = useState([]);
@@ -24,49 +21,50 @@ export default function dashBoard() {
     setCounters(genCounters());
     setPieData(genPieData());
     setLineData(genLineData());
-    setRecent(genRecentRows(100)); // muitos dados para testar scroll
+    setRecent(genRecentRows(100));
   }, []);
 
   if (!counters) {
     return (
-      <main className="ml-[22.5rem] mt-[165px] p-6">Carregando...</main>
+      <main className="ml-0 sm:ml-[22.5rem] mt-[88px] sm:mt-[165px] p-4">
+        Carregando...
+      </main>
     );
   }
+
   return (
-    // <RotaProtegidaAdm requiredRole="responsavel">
-    <>
-   <main className="ml-[22.5rem] mt-[165px] p-6 overflow-y-auto h-[calc(100vh-165px)]">
-      <div className="grid grid-cols-12 gap-6">
-        {/* Topo: 4 cards */}
-        <div className="col-span-12 grid grid-cols-12 gap-6">
-          <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-            <CardStat title="Chamados abertos" value={counters.abertos} />
-          </div>
-          <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-            <CardStat title="Chamados em andam." value={counters.andamento} />
-          </div>
-          <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-            <CardStat title="Chamados finalizados" value={counters.finalizados} />
-          </div>
-          <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-            <CardStat title="Tempo médio de resolução" value={counters.tempoMedioHoras} suffix="h" />
-          </div>
+    <main className="ml-0sm:ml-[22.5rem] mt-[88px] sm:mt-[165px] p-4 overflow-y-auto">
+    <div className="grid grid-cols-12 gap-6">
+      
+      {/* Cards do topo */}
+      <div className="col-span-12 grid grid-cols-12 gap-6">
+        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
+          <CardStat title="Chamados abertos" value={counters.abertos} />
         </div>
-
-        {/* Meio: gráficos */}
-        <div className="col-span-12 xl:col-span-4">
-          <CardChartPie data={pieData} />
+        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
+          <CardStat title="Chamados em andam." value={counters.andamento} />
         </div>
-        <div className="col-span-12 xl:col-span-8">
-          <CardChartLine data={lineData} />
+        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
+          <CardStat title="Chamados finalizados" value={counters.finalizados} />
         </div>
-
-        {/* Base: tabela */}
-        <div className="col-span-12">
-          <CardTableRecent rows={recent} />
+        <div className="col-span-12 sm:col-span-6 xl:col-span-3">
+          <CardStat title="Tempo médio de resolução" value={counters.tempoMedioHoras} suffix="h" />
         </div>
       </div>
-    </main>
-      </>
+
+      {/* Gráficos */}
+      <div className="col-span-12 xl:col-span-4 min-h-[300px]">
+        <CardChartPie data={pieData} />
+      </div>
+      <div className="col-span-12 xl:col-span-8 min-h-[300px]">
+        <CardChartLine data={lineData} />
+      </div>
+
+      {/* Tabela */}
+      <div className="col-span-12">
+        <CardTableRecent rows={recent} />
+      </div>
+    </div>
+  </main>
   );
 }
