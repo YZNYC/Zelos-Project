@@ -1,16 +1,14 @@
-"use client"
-
-import { useEffect, useRef } from 'react';
-import Link from 'next/link';
-import Header from './Components/Layout/HeaderLogin/Header';
+"use client";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import Header from "./Components/Layout/HeaderLogin/Header";
 
 function ParticleBackground() {
   const canvasRef = useRef(null);
 
-  // código das partículas
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     let w = (canvas.width = window.innerWidth);
     let h = (canvas.height = window.innerHeight);
 
@@ -35,7 +33,7 @@ function ParticleBackground() {
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(230,0,0,0.8)';
+        ctx.fillStyle = "rgba(230,0,0,0.8)";
         ctx.fill();
       }
     }
@@ -73,10 +71,9 @@ function ParticleBackground() {
       h = canvas.height = window.innerHeight;
     }
 
-    window.addEventListener('resize', handleResize);
-
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -84,75 +81,88 @@ function ParticleBackground() {
     <canvas
       ref={canvasRef}
       style={{
-        position: 'fixed',
+        position: "fixed",
         top: 0,
         left: 0,
         zIndex: 10,
-        width: '100vw',
-        height: '100vh',
-        display: 'block',
+        width: "100vw",
+        height: "100vh",
+        display: "block",
       }}
     />
   );
 }
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState("");
+  const router = useRouter();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: email, password: senha }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Erro ao fazer login");
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      router.push("/dashBoard");
+    } catch (err) {
+      setErro(err.message);
+    }
+  };
+
   return (
     <main className="relative min-h-screen flex items-center justify-center overflow-hidden text-white font-sans bg-cover bg-center">
-
-      {/* Logos*/}
+      {/* Logos */}
       <div className="fixed top-0 left-10 flex items-center mt-[-40] z-40 rounded-br-lg">
-        <img src="/senai-logo.png"
-          alt="Logo SENAI"
-          className="h-60 object-contain hidden lg:flex" />
-        <img src="/zelos-logo.png"
-          alt="Logo Zelos"
-          className="h-40 object-contain hidden lg:flex" />
+        <img src="/senai-logo.png" alt="Logo SENAI" className="h-60 object-contain hidden lg:flex" />
+        <img src="/zelos-logo.png" alt="Logo Zelos" className="h-40 object-contain hidden lg:flex" />
       </div>
-      {/* Header apenas mobile/tablet */}
 
-      {/* Header apenas mobile/tablet, fixo e transparente */}
+      {/* Header mobile */}
       <div className="lg:hidden fixed top-0 left-0 w-full z-20 flex mt-[-20px] justify-center">
         <Header />
       </div>
 
+      {/* BG e partículas */}
+      <div className="absolute inset-0 bg-cover bg-center hidden lg:block" style={{ backgroundImage: "url('/BG.jpeg')" }} />
+      <div className="hidden lg:block"><ParticleBackground /></div>
+      <div className="absolute inset-0 bg-cover bg-center sm:block lg:hidden" style={{ backgroundColor: "#2C2C2C" }} />
 
-
-      {/* BG de fundo */}
-      <div
-        className="absolute inset-0 bg-cover bg-center hidden lg:block"
-        style={{ backgroundImage: "url('/BG.jpeg')" }}
-      />
-
-      {/* Partículas */}
-      <div className="hidden lg:block">
-        <ParticleBackground />
-      </div>
-      <div
-        className="absolute inset-0 bg-cover bg-center sm:block lg:hidden"
-        style={{ backgroundColor: "#2C2C2C" }}
-      />
-      {/* Form do login */}
+      {/* Login */}
       <section className="relative bg-black/70 p-10 rounded-lg max-w-sm w-full text-center shadow-xl z-20 w-[90%] sm:max-w-sm">
         <h1 className="text-3xl font-bold mb-8">Login</h1>
 
-        <form className="flex flex-col gap-4 text-left">
-          <label className="font-semibold" htmlFor="email">
-            Email:
-          </label>
+        <form className="flex flex-col gap-4 text-left" onSubmit={handleLogin}>
+          <label className="font-semibold" htmlFor="email">Email:</label>
           <input
             id="email"
-            type="email"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Digite seu email"
             className="rounded px-3 py-2 bg-black/90 border border-gray-700 focus:border-red-600 outline-none"
           />
 
-          <label className="font-semibold" htmlFor="senha">
-            Senha:
-          </label>
+          <label className="font-semibold" htmlFor="senha">Senha:</label>
           <input
             id="senha"
             type="password"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
             placeholder="Digite sua senha"
             className="rounded px-3 py-2 bg-black/90 border border-gray-700 focus:border-red-600 outline-none"
           />
@@ -161,19 +171,18 @@ export default function LoginPage() {
             Esqueceu sua <strong>senha?</strong>
           </a>
 
-          <Link href="/dashBoard"><button
+          <button
             type="submit"
             className="bg-black/90 border border-white rounded w-75 py-2 mt-4 hover:bg-red-700 transition cursor-pointer"
           >
             Entrar
-          </button></Link>
+          </button>
+
+          {erro && <p className="text-red-500 mt-2">{erro}</p>}
         </form>
 
         <p className="text-red-500 text-sm mt-6">
-          Não tem login?{' '}
-          <a href="#" className="underline hover:text-red-700">
-            <strong>cadastre-se</strong>
-          </a>
+          Não tem login? <a href="#" className="underline hover:text-red-700"><strong>cadastre-se</strong></a>
         </p>
       </section>
     </main>
