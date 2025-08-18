@@ -2,6 +2,7 @@
 import { useState } from "react";
 import ChamadoCard from "../Components/dashboard/ChamadoCard";
 import ModalEditarChamado from "../Components/Modals/ModalEditarChamado";
+import ModalCreateChamado from "../Components/Modals/ModalCriarChamado";
 
 export default function Dashboard() {
   const [chamados, setChamados] = useState([
@@ -11,12 +12,25 @@ export default function Dashboard() {
   ]);
 
   const [selectedChamado, setSelectedChamado] = useState(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const handleSave = (updatedChamado) => {
-    const novosChamados = chamados.map(c =>
+    const novosChamados = chamados.map((c) =>
       c.id === updatedChamado.id ? updatedChamado : c
     );
     setChamados(novosChamados);
+  };
+
+  const handleCreate = (novoChamado) => {
+    const chamadoComId = {
+      id: chamados.length + 1,
+      protocolo: Date.now().toString().slice(-10), // gera protocolo fake
+      status: "Em aberto",
+      data: new Date().toLocaleDateString("pt-BR"),
+      tecnico: "Não atribuído",
+      ...novoChamado,
+    };
+    setChamados([...chamados, chamadoComId]);
   };
 
   return (
@@ -38,7 +52,12 @@ export default function Dashboard() {
         <select className="border border-gray-300 rounded px-2 py-2 cursor-pointer">
           <option>Tipos</option>
         </select>
-        <button className="bg-red-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-red-500">+ Novo Chamado</button>
+        <button
+          onClick={() => setIsCreateModalOpen(true)}
+          className="bg-red-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-red-500"
+        >
+          + Novo Chamado
+        </button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -51,12 +70,19 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Aqui colocamos o modal */}
+      {/* Modal de edição */}
       <ModalEditarChamado
         isOpen={!!selectedChamado}
         onClose={() => setSelectedChamado(null)}
         chamado={selectedChamado}
         onSave={handleSave}
+      />
+
+      {/* Modal de criação */}
+      <ModalCreateChamado
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onSave={handleCreate}
       />
     </div>
   );

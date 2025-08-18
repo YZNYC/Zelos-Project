@@ -10,9 +10,9 @@ export default function ChamadoCard({ chamado, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="border p-4 rounded cursor-pointer hover:shadow-lg"
+      className="border p-4 rounded-xl cursor-pointer hover:shadow-lg"
     >
-      <div className={`inline-block px-2 py-1 rounded ${statusColor[chamado.status]}`}>
+      <div className={`inline-block px-2 py-1 rounded-lg ${statusColor[chamado.status]}`}>
         {chamado.status}
       </div>
       <h3 className="font-bold mt-2">{chamado.descricao}</h3>
