@@ -17,6 +17,7 @@ export default function ChamadoCard({ chamado, onClick }) {
       </div>
       <h3 className="font-bold mt-2">{chamado.descricao}</h3>
       <p>Protocolo: {chamado.protocolo}</p>
+      <p>Prioridade: {chamado.prioridade}</p>
       <p>Técnico: {chamado.tecnico}</p>
       <p>Data: {chamado.data}</p>
     </div>
