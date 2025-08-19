@@ -43,3 +43,12 @@ export function genRecentRows(qtd = 80) {
     tecnico: tecnicos[Math.floor(Math.random() * tecnicos.length)],
   }));
 }
+
+export const relatorios = Array.from({ length: 20 }, (_, i) => ({
+  id: i + 1,
+  tecnico: `Técnico ${Math.floor(Math.random() * 10) + 1}`,
+  protocolo: `PROTO-${Math.floor(1000 + Math.random() * 9000)}`,
+  descricao: `Descrição detalhada do protocolo ${i + 1}, com todos os detalhes necessários para análise.`,
+  tempoResolucao: `${Math.floor(Math.random() * 24)}h ${Math.floor(Math.random() * 60)}m`,
+  data: new Date(Date.now() - Math.floor(Math.random() * 10000000000)).toLocaleDateString(),
+}));
