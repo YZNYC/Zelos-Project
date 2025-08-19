@@ -4,12 +4,8 @@ import CardStat from "../Components/dashboard/CardStat";
 import CardChartPie from "../Components/dashboard/CardChartPie";
 import CardChartLine from "../Components/dashboard/CardChartLine";
 import CardTableRecent from "../Components/dashboard/CardTableRecent";
-import {
-  genCounters,
-  genPieData,
-  genLineData,
-  genRecentRows,
-} from "../lib/mockDashBoardData";
+import { genCounters, genPieData, genLineData, genRecentRows } from "../lib/mockDashBoardData";
+
 
 export default function dashBoard() {
   const [counters, setCounters] = useState(null);

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const MENUS = [
   { title: "Visão geral", link: "/dashBoard" },
-  { title: "Chamados", link: "/RotaAluno" },
+  { title: "Chamados", link: "/Chamados" },
   { title: "Relatórios", link: "/RotaAluno" },
   { title: "Técnicos", link: "/RotaAluno" },
   { title: "Configurações", link: "/RotaAluno" },
