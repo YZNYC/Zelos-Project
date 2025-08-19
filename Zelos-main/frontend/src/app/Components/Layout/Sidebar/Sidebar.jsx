@@ -6,7 +6,7 @@ const MENUS = [
   { title: "Chamados", link: "/Chamados" },
   { title: "Relatórios", link: "/Relatorios" },
   { title: "Técnicos", link: "/RotaAluno" },
-  { title: "Configurações", link: "/RotaAluno" },
+  { title: "Configurações", link: "/Configuracoes" },
 ];
 
 const SIDEBAR_WIDTH_REM = 22.5; // 22.5rem (equiv. ao seu w-90)
