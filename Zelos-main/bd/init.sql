@@ -1,16 +1,18 @@
+    CREATE DATABASE zelo;
+    USE zelo;
+    
     -- Criação da tabela `usuarios`
     CREATE TABLE usuarios (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(255) NOT NULL,
-        senha VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL UNIQUE,
-        funcao VARCHAR(100) NOT NULL,
+        funcao ENUM ('admin','tecnico','usuario') DEFAULT 'usuario',
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
         criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
-
-    -- Criação da tabela `pool`
+    
+    -- Criação da tabela `pool` usada para os chamados
     CREATE TABLE pool (
         id INT AUTO_INCREMENT PRIMARY KEY,
         titulo ENUM('externo', 'manutencao', 'apoio_tecnico', 'limpeza') NOT NULL,
@@ -24,7 +26,7 @@
         FOREIGN KEY (updated_by) REFERENCES usuarios(id)
     );
 
-    -- Criação da tabela `chamados`
+    -- Criação da tabela `chamados` associando
     CREATE TABLE chamados (
         id INT AUTO_INCREMENT PRIMARY KEY,
         titulo VARCHAR(255) NOT NULL,
@@ -32,7 +34,7 @@
         tipo_id INT,
         tecnico_id INT,
         usuario_id INT,
-        status ENUM('pendente', 'em andamento', 'concluído') DEFAULT 'pendente',
+        status ENUM('pendente', 'em andamento', 'concluido') DEFAULT 'pendente',
         criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (tipo_id) REFERENCES pool(id),
@@ -46,11 +48,11 @@
         chamado_id INT,
         tecnico_id INT,
         descricao TEXT,
-        comeco TIMESTAMP NOT NULL,
-        fim TIMESTAMP NOT NULL,
+        comeco DATETIME NOT NULL,
+        fim DATETIME NOT NULL,
         duracao INT AS (TIMESTAMPDIFF(SECOND, comeco, fim)) STORED, -- Calcula a duração em segundos
         criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (chamado_id) REFERENCES chamados(id),
+        FOREIGN KEY (chamado_id) REFERENCES chamados(id),	
         FOREIGN KEY (tecnico_id) REFERENCES usuarios(id)
     );
 
