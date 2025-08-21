@@ -16,17 +16,6 @@ export default function ModalEditarConta({ isOpen, onClose, onSave, user }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-11/12 max-w-2xl p-8">
         <h2 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-100">Editar Conta</h2>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 dark:text-gray-300 mb-1">Nome</label>
-          <input
-            type="text"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
-          />
-        </div>
-
         <div className="mb-6">
           <label className="block text-gray-700 dark:text-gray-300 mb-1">Email</label>
           <input

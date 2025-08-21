@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 
 export default function ModalEditarChamado({ isOpen, onClose, chamado, onSave, onDelete }) {
+  const [titulo, setTitulo] = useState("")
   const [descricao, setDescricao] = useState("");
   const [tipo, setTipo] = useState("");
   const [prioridade, setPrioridade] = useState("");
@@ -11,6 +12,7 @@ export default function ModalEditarChamado({ isOpen, onClose, chamado, onSave, o
   // Atualiza os campos quando o chamado mudar
   useEffect(() => {
     if (chamado) {
+      setTitulo(chamado.titulo|| "");
       setDescricao(chamado.descricao || "");
       setTipo(chamado.tipo || "");
       setPrioridade(chamado.prioridade || "");
@@ -34,7 +36,7 @@ export default function ModalEditarChamado({ isOpen, onClose, chamado, onSave, o
   if (!isOpen || !chamado) return null;
 
   const handleSave = () => {
-    onSave({ ...chamado, descricao, tipo, prioridade, status, tecnico });
+    onSave({ ...chamado, titulo, descricao, tipo, prioridade, status, tecnico });
     onClose();
   };
 
@@ -63,6 +65,13 @@ export default function ModalEditarChamado({ isOpen, onClose, chamado, onSave, o
         <h2 className="text-center font-semibold mb-4 text-lg">
           Editar chamado - Protoc. {chamado.id}
         </h2>
+
+        <label className="block mb-2 font-medium">Título</label>
+        <input
+          className="w-full p-2 mb-4 border border-gray-400 rounded"
+          value={titulo}
+          onChange={(e) => setTitulo(e.target.value)}
+        />
 
         <label className="block mb-2 font-medium">Descrição</label>
         <input
