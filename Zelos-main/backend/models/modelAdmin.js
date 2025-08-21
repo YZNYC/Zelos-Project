@@ -1,43 +1,40 @@
 import { create, readAll, read, update, deleteRecord } from '../config/database.js';
 
-// Listar usuarios
+// Usuários
 async function listarUsuariosModel() {
-    return await readAll('usuarios');
-};
-
-// Listar usuario ID
+  return await readAll('usuarios');
+}
 async function listarUsuariosIdModel(id) {
-    return await read('usuarios', 'id = ?', [id])
-};
-
-// Criar usuario
+  return await read('usuarios', 'id = ?', [id]);
+}
 async function criarUsuarioModel(data) {
-    return await create('usuarios', data)
-};
+  return await create('usuarios', data);
+}
 
-// Criar chamado
+// Chamados
 async function criarChamadoModel(data) {
-    return await create('chamados', data)
-};
-
-// Atualizar chmado
+  return await create('chamados', data);
+}
 async function atualizarChamadoModel(id, data) {
-    return await update('chamados', data, 'id = ?', [id])
-};
-
-//Listar chamado
+  return await update('chamados', data, 'id = ?', [id]);
+}
 async function listarChamadosModel() {
-    return await readAll ('chamados')
-};
-
-// Listar chamado id
+  return await readAll('chamados');
+}
 async function listarChamadosIdModel(id) {
-    return await read('chamados', 'usuario_id = ?', [id])
-};
-
-// Deletar chamado
+  return await read('chamados', 'id = ?', [id]);
+}
 async function deletarChamadoModel(id) {
-    return await deleteRecord('chamados', 'id = ?', [id])
-};
+  return await deleteRecord('chamados', 'id = ?', [id]);
+}
 
-export default { listarUsuariosModel, listarUsuariosIdModel, criarUsuarioModel, criarChamadoModel, listarChamadosModel, listarChamadosIdModel, deletarChamadoModel, atualizarChamadoModel };
+export default {
+  listarUsuariosModel,
+  listarUsuariosIdModel,
+  criarUsuarioModel,
+  criarChamadoModel,
+  listarChamadosModel,
+  listarChamadosIdModel,
+  deletarChamadoModel,
+  atualizarChamadoModel
+};
