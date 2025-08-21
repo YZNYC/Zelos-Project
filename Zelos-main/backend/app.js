@@ -1,7 +1,9 @@
+// app.js
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRotas from './routes/authRotas.js';
+import dashboardRotas from './routes/dashboard.js';
 
 dotenv.config();
 
@@ -15,25 +17,25 @@ app.use(cors({
 
 app.use(express.json());
 
-// Nao sei se vai precisar de session;
-// app.use(session(...));
-// app.use(passport.initialize());
-// app.use(passport.session());
-
+// Rotas
 app.use('/auth', authRotas);
+app.use('/dashboard', dashboardRotas);
+
+// Health check
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'online' });
 });
 
+// Tratamento de erros
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Rejeição não tratada em:', promise, 'motivo:', reason);
 });
-
 process.on('uncaughtException', (err) => {
   console.error('Exceção não capturada:', err);
   process.exit(1);
 });
 
+// Inicializa servidor
 const server = app.listen(porta, () => {
   console.log(`Servidor rodando na porta ${porta}`);
 }).on('error', (err) => {
