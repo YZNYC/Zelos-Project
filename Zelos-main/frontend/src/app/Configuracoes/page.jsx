@@ -46,23 +46,17 @@ export default function Configuracoes() {
                         className="w-full p-2 mb-4 rounded bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100"
                         readOnly
                     />
-                    <button
-                        className="w-full bg-red-600 hover:bg-red-700 text-white p-2 rounded cursor-pointer"
-                        onClick={() => setModalOpen(true)}
-                    >
-                        Alterar conta
-                    </button>
                 </div>
 
                 {/* Card: Notificações */}
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow w-150">
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow w-182">
                     <h2 className="text-4xl font-semibold mb-8 text-gray-800 dark:text-gray-100">Notificações</h2>
 
                     <div className="flex items-center justify-between mb-3">
                         <span className="text-gray-700 dark:text-gray-200 text-xl">Novos chamados</span>
                         <label className="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" defaultChecked className="sr-only peer" />
-                            <div className="w-15 h-6 bg-gray-400 peer-focus:outline-none rounded-full peer peer-checked:bg-gray-800 transition-colors"></div>
+                            <div className="w-15 h-6 bg-gray-400 peer-focus:outline-none rounded-full peer peer-checked:bg-gray-700 transition-colors"></div>
                             <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md peer-checked:translate-x-9 transition-transform"></div>
                         </label>
                     </div>
@@ -71,7 +65,7 @@ export default function Configuracoes() {
                         <span className="text-gray-700 dark:text-gray-200 text-xl">Respostas ao chamados</span>
                         <label className="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" defaultChecked className="sr-only peer" />
-                            <div className="w-15 h-6 bg-gray-400 peer-focus:outline-none rounded-full peer peer-checked:bg-gray-800 transition-colors"></div>
+                            <div className="w-15 h-6 bg-gray-400 peer-focus:outline-none rounded-full peer peer-checked:bg-gray-700 transition-colors"></div>
                             <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md peer-checked:translate-x-9 transition-transform"></div>
                         </label>
                     </div>
@@ -80,7 +74,7 @@ export default function Configuracoes() {
                         <span className="text-gray-700 dark:text-gray-200 text-xl">Chamados encerrados</span>
                         <label className="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" defaultChecked className="sr-only peer" />
-                           <div className="w-15 h-6 bg-gray-400 peer-focus:outline-none rounded-full peer peer-checked:bg-gray-800 transition-colors"></div>
+                           <div className="w-15 h-6 bg-gray-400 peer-focus:outline-none rounded-full peer peer-checked:bg-gray-700 transition-colors"></div>
                             <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md peer-checked:translate-x-9 transition-transform"></div>
                         </label>
                     </div>
