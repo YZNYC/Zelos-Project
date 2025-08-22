@@ -94,7 +94,7 @@ function ParticleBackground() {
 }
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
+  const [numeroUsuario, setNumeroUsuario] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
   const router = useRouter();
@@ -106,7 +106,7 @@ export default function LoginPage() {
       const res = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: email, password: senha }),
+        body: JSON.stringify({ username: numeroUsuario, password: senha }),
       });
 
       const data = await res.json();
@@ -147,13 +147,13 @@ export default function LoginPage() {
         <h1 className="text-3xl font-bold mb-8">Login</h1>
 
         <form className="flex flex-col gap-4 text-left" onSubmit={handleLogin}>
-          <label className="font-semibold" htmlFor="email">Email:</label>
+          <label className="font-semibold" htmlFor="numeroUsuario">Número de Usuário:</label>
           <input
-            id="email"
+            id="numeroUsuario"
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Digite seu email"
+            value={numeroUsuario}
+            onChange={(e) => setNumeroUsuario(e.target.value)}
+            placeholder="Digite seu número de usuário"
             className="rounded px-3 py-2 bg-black/90 border border-gray-700 focus:border-red-600 outline-none"
           />
 

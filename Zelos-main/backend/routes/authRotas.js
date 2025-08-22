@@ -2,46 +2,63 @@ import express from 'express';
 import passport from '../config/ldap.js';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config/jwt.js';
-import AuthMiddleware from '../middlewares/authMiddleware.js'; 
+import { create, read } from '../config/database.js';
+import AuthMiddleware from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
 router.post('/login', (req, res, next) => {
-  passport.authenticate('ldapauth', { session: false }, (err, user, info) => {
+  passport.authenticate('ldapauth', { session: false }, async (err, user, info) => {
     try {
       if (err) {
-        console.error('Erro na autenticação:', err);
+        console.error('Erro na autenticação LDAP:', err);
         return res.status(500).json({ error: 'Erro interno no servidor' });
       }
-      
+
       if (!user) {
         console.warn('Falha na autenticação:', info?.message || 'Credenciais inválidas');
         return res.status(401).json({ error: info?.message || 'Autenticação falhou' });
       }
 
+      const numeroUsuario = user.sAMAccountName;
+      const nome = user.name;
+
+      try {
+
+        const existingUser = await read('usuarios', 'numeroUsuario = ?', [numeroUsuario]);
+
+        if (!existingUser) {
+          const userId = await create('usuarios', { numeroUsuario, nome });
+          console.log(`Novo usuário LDAP salvo no MySQL: ${numeroUsuario} (ID: ${userId})`);
+        } else {
+          console.log(`Usuário LDAP já existe no MySQL: ${numeroUsuario}`);
+        }
+      } catch (dbError) {
+        console.error('Erro ao salvar usuário no MySQL:', dbError);
+      }
+
       const payload = {
-        id: user.uid || user.sAMAccountName || user.username,
+        id: numeroUsuario,
         tipo: 'usuario_ldap',
-        username: user.sAMAccountName || user.username,
-        displayName: user.displayName
+        username: numeroUsuario,
+        displayName: nome
       };
 
       const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 
-      console.log('Usuário autenticado:', user.sAMAccountName || user.username);
+      console.log('Usuário autenticado LDAP:', numeroUsuario);
 
-      return res.json({ 
-        message: 'Autenticado com sucesso', 
+      return res.json({
+        message: 'Autenticado com sucesso',
         token,
         user: {
-          username: payload.username,
-          displayName: payload.displayName,
+          username: numeroUsuario,
+          displayName: nome,
           email: user.mail
         }
       });
-
     } catch (error) {
-      console.error('Erro inesperado:', error);
+      console.error('Erro inesperado no login:', error);
       res.status(500).json({ error: 'Erro inesperado no servidor' });
     }
   })(req, res, next);
