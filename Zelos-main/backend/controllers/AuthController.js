@@ -1,34 +1,63 @@
-import jwt from 'jsonwebtoken';
-import { read, compare } from '../config/database.js';
-import { JWT_SECRET } from '../config/jwt.js';
+import jwt from "jsonwebtoken";
+import passport from "passport";
+import { read, create } from "../config/database.js";
+import { JWT_SECRET } from "../config/jwt.js";
 
-const loginController = async (req, res) => {
-  const { email, senha, tipo } = req.body;
-
-  try {
-  
-    const usuario = await read('usuarios', `email = '${email}' AND tipo = '${tipo}'`);
-
-
-    if (!usuario) {
-      return res.status(404).json({ mensagem: 'Usuário não encontrado!' });
+const loginController = (req, res, next) => {
+  passport.authenticate("ldapauth", { session: false }, async (err, ldapUser) => {
+    if (err) {
+      console.error("Erro no LDAP:", err);
+      return res.status(500).json({ mensagem: "Erro ao autenticar no LDAP" });
     }
 
-    const senhaCorreta = await compare(senha, usuario.senha);
-    if (!senhaCorreta) {
-      return res.status(401).json({ mensagem: 'Senha incorreta' });
+    if (!ldapUser) {
+      return res.status(401).json({ mensagem: "Credenciais inválidas" });
     }
 
-    const token = jwt.sign({ id: usuario.id, tipo: usuario.tipo }, JWT_SECRET, {
-      expiresIn: '1h',
-    });
+    try {
 
-    res.json({ mensagem: 'Login realizado com sucesso', token });
+      const numeroUsuario = ldapUser.sAMAccountName;
+      const nome = ldapUser.name;
 
-  } catch (error) {
-    console.error('Erro ao fazer login:', error);
-    res.status(500).json({ mensagem: 'Erro ao fazer login' });
-  }
+      let usuario = await read("usuarios", `numeroUsuario = '${numeroUsuario}'`);
+
+      if (!usuario) {
+        try {
+          await create("usuarios", {
+            numeroUsuario,
+            nome,
+          });
+
+          console.log(`Novo usuário adicionado ao banco: ${numeroUsuario} - ${nome}`);
+
+          usuario = await read("usuarios", `numeroUsuario = '${numeroUsuario}'`);
+        } catch (dbError) {
+          console.error("Erro ao salvar usuário no banco:", dbError);
+          return res.status(500).json({ mensagem: "Erro ao salvar usuário no banco" });
+        }
+      }
+
+      const token = jwt.sign(
+        { id: usuario.id, funcao: usuario.funcao || "usuario" },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      res.json({
+        mensagem: "Login realizado com sucesso",
+        token,
+        user: {
+          id: usuario.id,
+          numeroUsuario: usuario.numeroUsuario,
+          nome: usuario.nome,
+          funcao: usuario.funcao || "usuario",
+        },
+      });
+    } catch (error) {
+      console.error("Erro geral no login:", error);
+      res.status(500).json({ mensagem: "Erro ao processar login" });
+    }
+  })(req, res, next);
 };
 
 export { loginController };
