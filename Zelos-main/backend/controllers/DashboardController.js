@@ -21,14 +21,14 @@ export const getDashboardPie = async (req, res) => {
 };
 
 export const getDashboardLine = async (req, res) => {
-  try {
-    const data = await getLineData();
-    res.json(data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erro ao buscar dados do line chart" });
-  }
-};
+    try {
+      const data = await getLineData();
+      res.json(data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Erro ao buscar dados do gráfico line" });
+    }
+  };
 
 export const getDashboardRecent = async (req, res) => {
   try {
