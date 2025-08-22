@@ -1,6 +1,7 @@
-'use client'
+"use client";
+
 import { useState, useEffect } from "react";
-import axios from "axios"; 
+import axios from "axios";
 import CardStat from "../Components/dashboard/CardStat";
 import CardChartPie from "../Components/dashboard/CardChartPie";
 import CardChartLine from "../Components/dashboard/CardChartLine";
@@ -32,18 +33,10 @@ export default function dashBoard() {
     fetchData();
   }, []);
 
-  // Se ainda não carregou, renderiza só o loading centralizado, sem main nem margem
-  if (!counters) {
-    return (
-      <div className="fixed inset-0 flex justify-center items-center bg-white z-50">
-        Carregando...
-      </div>
-    );
-  }
+  if (!counters) return <div className="p-4">Carregando...</div>;
 
-  // Quando os dados carregarem, renderiza o main normalmente
   return (
-    <main className="ml-0  mt-[88px] sm:mt-[165px] p-4 overflow-y-auto">
+    <main className="ml-0 mt-[88px] sm:mt-[165px] p-4 overflow-y-auto">
       <div className="grid grid-cols-12 gap-6">
 
         {/* Cards do topo */}
@@ -52,7 +45,7 @@ export default function dashBoard() {
             <CardStat title="Chamados abertos" value={counters.abertos} />
           </div>
           <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-            <CardStat title="Chamados em andam." value={counters.andamento} />
+            <CardStat title="Chamados em andamento" value={counters.andamento} />
           </div>
           <div className="col-span-12 sm:col-span-6 xl:col-span-3">
             <CardStat title="Chamados finalizados" value={counters.finalizados} />
