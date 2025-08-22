@@ -23,16 +23,20 @@ export default function CardTableRecent({ title = "Chamados recentes", rows = []
                 <td className="py-2 text-gray-700">{r.descricao}</td>
                 <td className="py-2">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold inline-block ${
-                      r.status === "Em aberto"
+                    className={`px-2 py-1 rounded-full text-xs font-semibold inline-block ${r.status === "pendente"
                         ? "bg-red-100 text-[#ED1C24]"
-                        : r.status === "Em andamento"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : "bg-green-100 text-green-700"
-                    }`}
+                        : r.status === "em andamento"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : "bg-green-100 text-green-700"
+                      }`}
                   >
-                    {r.status}
+                    {r.status === "pendente"
+                      ? "Pendente"
+                      : r.status === "em andamento"
+                        ? "Em andamento"
+                        : "Concluído"}
                   </span>
+
                 </td>
                 <td className="py-2 text-gray-700">{r.dataAbertura}</td>
                 <td className="py-2 text-gray-700">{r.tecnico}</td>
