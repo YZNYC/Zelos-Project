@@ -1,23 +1,22 @@
-import { update, create, readAll } from "../config/database.js"
+import { update, create, readAll } from '../config/database.js';
 
-// Atualizar chmado
+// Chamados
 async function atualizarChamadoModel(id, data) {
-    return await update('chamados', data, 'id = ?', [id])
-};
+  return await update('chamados', data, 'id = ?', [id]);
+}
 
-// Criar Apontamentos
+// Apontamentos
 async function criarApontamentoModel(data) {
-    return await create('apontamentos', data)
-};
+  return await create('apontamentos', data);
+}
 
-// Listar apenas chamados ativos
+// Listar chamados do técnico
 async function listarChamadosAtivoModel(tecnicoID) {
-    return await readAll('chamados', 'tecnico_id = ?', [tecnicoID])
-};
+  return await readAll('chamados', 'tecnico_id = ?', [tecnicoID]);
+}
 
-// Listar Chamado
-async function listarChamadosModel(id) {
-    return await readAll('chamados', 'usuario_id = ?', [id]);
+export default {
+  atualizarChamadoModel,
+  criarApontamentoModel,
+  listarChamadosAtivoModel
 };
-
-export default { atualizarChamadoModel, criarApontamentoModel, listarChamadosAtivoModel, listarChamadosModel };

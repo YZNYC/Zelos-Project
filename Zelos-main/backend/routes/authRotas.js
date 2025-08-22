@@ -64,11 +64,9 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/perfil', AuthMiddleware('usuario_ldap'), (req, res) => {
-  res.json({
-    mensagem: 'Acesso permitido à rota protegida',
-    usuario: req.usuario
-  });
+router.get('/perfil', AuthMiddleware('usuario', 'tecnico', 'admin'), (req, res) => {
+  res.json({ mensagem: 'Acesso permitido à rota protegida', usuario: req.usuario });
 });
+
 
 export default router;

@@ -6,9 +6,9 @@ import ModalCreateChamado from "../Components/Modals/ModalCriarChamado";
 
 export default function Dashboard() {
   const [chamados, setChamados] = useState([
-    { id: 1, protocolo: "8179247921", status: "Em aberto", descricao: "DataShow", data: "03/05/25", tecnico: "Rogério Amilton" },
-    { id: 2, protocolo: "9179247911", status: "Em andamento", descricao: "Computador", data: "23/07/25", tecnico: "Manuel Vanderlei" },
-    { id: 3, protocolo: "7179247944", status: "Finalizado", descricao: "Pacote Office", data: "10/06/25", tecnico: "Marcelo Gramado" },
+    { id: 1, protocolo: "8179247921", status: "Em aberto", titulo: "Merda", descricao: "DataShow", data: "03/05/25", tecnico: "Rogério Amilton" },
+    { id: 2, protocolo: "9179247911", status: "Em andamento",titulo: "Merda", descricao: "Computador", data: "23/07/25", tecnico: "Manuel Vanderlei" },
+    { id: 3, protocolo: "7179247944", status: "Finalizado", titulo: "Merda", descricao: "Pacote Office", data: "10/06/25", tecnico: "Marcelo Gramado" },
   ]);
 
   const [selectedChamado, setSelectedChamado] = useState(null);
