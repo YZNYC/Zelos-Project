@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "./Components/Layout/HeaderLogin/Header";
@@ -99,6 +99,12 @@ export default function LoginPage() {
   const [erro, setErro] = useState("");
   const router = useRouter();
 
+  // Checagem simples de token
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) router.push("/dashBoard");
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -111,9 +117,7 @@ export default function LoginPage() {
 
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.error || "Erro ao fazer login");
-      }
+      if (!res.ok) throw new Error(data.error || "Erro ao fazer login");
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
@@ -126,23 +130,19 @@ export default function LoginPage() {
 
   return (
     <main className="relative min-h-screen flex items-center justify-center overflow-hidden text-white font-sans bg-cover bg-center">
-      {/* Logos */}
       <div className="fixed top-0 left-10 flex items-center mt-[-40] z-40 rounded-br-lg">
         <img src="/senai-logo.png" alt="Logo SENAI" className="h-60 object-contain hidden lg:flex" />
         <img src="/zelos-logo.png" alt="Logo Zelos" className="h-40 object-contain hidden lg:flex" />
       </div>
 
-      {/* Header mobile */}
       <div className="lg:hidden fixed top-0 left-0 w-full z-20 flex mt-[-20px] justify-center">
         <Header />
       </div>
 
-      {/* BG e partículas */}
       <div className="absolute inset-0 bg-cover bg-center hidden lg:block" style={{ backgroundImage: "url('/BG.jpeg')" }} />
       <div className="hidden lg:block"><ParticleBackground /></div>
       <div className="absolute inset-0 bg-cover bg-center sm:block lg:hidden" style={{ backgroundColor: "#2C2C2C" }} />
 
-      {/* Login */}
       <section className="relative bg-black/70 p-10 rounded-lg max-w-sm w-full text-center shadow-xl z-20 w-[90%] sm:max-w-sm">
         <h1 className="text-3xl font-bold mb-8">Login</h1>
 
