@@ -16,7 +16,7 @@ export default function CardChartLine({
   data = [],
 }) {
   return (
-    <CardShell title={title} className="h-[350px]">
+    <CardShell title={title} className="h-[395px]">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
