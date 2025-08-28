@@ -15,7 +15,7 @@ export default function ChamadoCard({ chamado, onClick }) {
       <div className={`inline-block px-2 py-1 rounded-lg ${statusColor[chamado.status]}`}>
         {chamado.status}
       </div>
-      <h3 className="font-bold mt-2">{chamado.descricao}</h3>
+      <h3 className="font-bold mt-2">{chamado.titulo}</h3>
       <p>Protocolo: {chamado.protocolo}</p>
       <p>Prioridade: {chamado.prioridade}</p>
       <p>Técnico: {chamado.tecnico}</p>

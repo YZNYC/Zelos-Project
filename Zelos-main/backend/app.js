@@ -3,7 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRotas from './routes/authRotas.js';
-import dashboardRotas from './routes/dashboard.js';
+import dashboardRotas from "./routes/dashboardRoute.js";
+
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ app.use(express.json());
 
 // Rotas
 app.use('/auth', authRotas);
-app.use('/dashboard', dashboardRotas);
+app.use("/api/dashboard", dashboardRotas);
 
 // Health check
 app.get('/health', (req, res) => {

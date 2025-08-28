@@ -1,9 +1,20 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // para redirecionamento
 import { Bell } from "lucide-react";
 
 export default function Header({ onToggleSidebar }) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  // Função de logout que destrói o token e redireciona
+  const logout = () => {
+    // Remove token do localStorage (ou cookie se estiver usando)
+    localStorage.removeItem("token"); 
+    // Redireciona para a página de login
+    router.push("/");
+  };
+
   return (
     <header
       className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 sm:px-6"
@@ -14,7 +25,7 @@ export default function Header({ onToggleSidebar }) {
           header {
             height: 88px !important;
           }
-        }
+        } 
       `}</style>
 
       {/* Botão hambúrguer (mobile) */}
@@ -48,8 +59,9 @@ export default function Header({ onToggleSidebar }) {
       />
 
       <div className="w-9" />
-     {/* Ícones lado direito */}
-     <div className="flex items-center gap-6 relative">
+
+      {/* Ícones lado direito */}
+      <div className="flex items-center gap-6 relative">
         {/* Notificação */}
         <button className="text-white hover:text-gray-200 cursor-pointer">
           <Bell size={30} />
@@ -61,14 +73,13 @@ export default function Header({ onToggleSidebar }) {
             onClick={() => setOpen(!open)}
             className="w-15 h-15 rounded-full bg-gray-300 flex items-center justify-center cursor-pointer"
           >
-         
           </button>
 
           {/* Dropdown */}
           {open && (
             <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg">
               <button
-                onClick={() => alert("Logout")}
+                onClick={logout} // <- aqui chama a função de logout
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg cursor-pointer"
               >
                 Logout

@@ -111,5 +111,6 @@ async function compare(senha, hash) {
         return false;
     }
 }
+export { create, readAll, read, update, deleteRecord, compare };
 
-export { create, readAll, read, update, deleteRecord, compare, pool };
+export default pool;
