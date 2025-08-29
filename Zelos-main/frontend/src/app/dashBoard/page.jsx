@@ -1,25 +1,36 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import CardStat from "../Components/dashboard/CardStat";
 import CardChartPie from "../Components/dashboard/CardChartPie";
 import CardChartLine from "../Components/dashboard/CardChartLine";
 import CardTableRecent from "../Components/dashboard/CardTableRecent";
 
-export default function dashBoard() {
+export default function DashBoard() {
+  const router = useRouter();
   const [counters, setCounters] = useState(null);
   const [pieData, setPieData] = useState([]);
   const [lineData, setLineData] = useState([]);
   const [recent, setRecent] = useState([]);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      router.push("/");
+      return;
+    }
+
     const fetchData = async () => {
       try {
-        const resCounters = await axios.get("http://localhost:8080/api/dashboard/counters");
-        const resPie = await axios.get("http://localhost:8080/api/dashboard/pie");
-        const resLine = await axios.get("http://localhost:8080/api/dashboard/line");
-        const resRecent = await axios.get("http://localhost:8080/api/dashboard/recent");
+        const headers = { Authorization: `Bearer ${token}` };
+
+        const resCounters = await axios.get("http://localhost:8080/api/dashboard/counters", { headers });
+        const resPie = await axios.get("http://localhost:8080/api/dashboard/pie", { headers });
+        const resLine = await axios.get("http://localhost:8080/api/dashboard/line", { headers });
+        const resRecent = await axios.get("http://localhost:8080/api/dashboard/recent", { headers });
 
         setCounters(resCounters.data);
         setPieData(resPie.data);
@@ -27,11 +38,16 @@ export default function dashBoard() {
         setRecent(resRecent.data);
       } catch (error) {
         console.error("Erro ao carregar dados do dashboard:", error);
+
+        if (error.response?.status === 401) {
+          localStorage.removeItem("token");
+          router.push("/");
+        }
       }
     };
 
     fetchData();
-  }, []);
+  }, [router]);
 
   if (!counters) return <div className="p-4">Carregando...</div>;
 
@@ -39,7 +55,6 @@ export default function dashBoard() {
     <main className="ml-0 mt-[88px] sm:mt-[165px] p-4 overflow-y-auto">
       <div className="grid grid-cols-12 gap-6">
 
-        {/* Cards do topo */}
         <div className="col-span-12 grid grid-cols-12 gap-6">
           <div className="col-span-12 sm:col-span-6 xl:col-span-3">
             <CardStat title="Chamados abertos" value={counters.abertos} />
@@ -54,8 +69,6 @@ export default function dashBoard() {
             <CardStat title="Tempo médio de resolução" value={counters.tempoMedioHoras} suffix="h" />
           </div>
         </div>
-
-        {/* Gráficos */}
         <div className="col-span-12 xl:col-span-4 min-h-[300px]">
           <CardChartPie data={pieData} />
         </div>
@@ -63,7 +76,6 @@ export default function dashBoard() {
           <CardChartLine data={lineData} />
         </div>
 
-        {/* Tabela */}
         <div className="col-span-12">
           <CardTableRecent rows={recent} />
         </div>
