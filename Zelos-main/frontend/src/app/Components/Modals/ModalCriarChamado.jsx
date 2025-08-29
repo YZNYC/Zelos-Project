@@ -1,20 +1,12 @@
-
-
+// Components/Modals/ModalCriarChamado.js
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function ModalCreateChamado({ isOpen, onClose, onCreate }) {
-  const [tecnicos, setTecnicos] = useState([]);
-
-  useEffect(() => {
-    if (isOpen) {
-      axios
-        .get("http://localhost:8080/api/chamados/tecnicos")
-        .then((res) => setTecnicos(res.data))
-        .catch((err) => console.error("Erro ao buscar técnicos:", err));
-    }
-  }, [isOpen]);
+// Adicione `tecnicos` e `tipos` como props
+export default function ModalCreateChamado({ isOpen, onClose, onCreate, tecnicos, tipos }) {
+  // Remova o estado `tecnicos` local e o useEffect para buscar técnicos aqui
+  // O estado `tecnicos` será passado via props
 
   if (!isOpen) return null;
 
@@ -24,17 +16,21 @@ export default function ModalCreateChamado({ isOpen, onClose, onCreate }) {
     const data = {
       titulo: e.target.titulo.value,
       descricao: e.target.descricao.value,
-      tipo_id: e.target.tipo.value,       // corrigido para backend
-      prioridade: e.target.prioridade.value,
+      tipo_id: e.target.tipo.value,
+      prioridade: e.target.prioridade.value, // Adicionei 'prioridade' que está no seu modal, mas não no controller.
       tecnico_id: e.target.tecnico_id.value,
+      // usuario_id pode ser adicionado aqui se for fixo ou via contexto de autenticação
     };
 
     try {
+      // Alerta: No seu controller `createChamado`, não há campo para `prioridade`.
+      // Se você quiser salvar a prioridade, precisará adicioná-la à tabela `chamados`
+      // e ao `createChamado` no backend. Por enquanto, ela será ignorada no POST.
       await axios.post("http://localhost:8080/api/chamados", data);
-      if (typeof onCreate === "function") onCreate(); // só chama se existir
+      if (typeof onCreate === "function") onCreate();
       onClose();
     } catch (err) {
-      console.error("Erro ao criar chamado:", err);
+      console.error("Erro ao criar chamado:", err.response?.data || err);
     }
   };
 
@@ -85,9 +81,11 @@ export default function ModalCreateChamado({ isOpen, onClose, onCreate }) {
               name="tipo"
               className="mt-1 block w-full border border-gray-300 rounded-lg p-2 cursor-pointer"
             >
-              <option value="1">Manutenção</option>
-              <option value="2">Limpeza</option>
-              <option value="3">Apoio Técnico</option>
+              {tipos.map((tipo) => (
+                <option key={tipo.id} value={tipo.id}>
+                  {tipo.titulo.charAt(0).toUpperCase() + tipo.titulo.slice(1).replace('_', ' ')}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -143,4 +141,3 @@ export default function ModalCreateChamado({ isOpen, onClose, onCreate }) {
     </div>
   );
 }
-
