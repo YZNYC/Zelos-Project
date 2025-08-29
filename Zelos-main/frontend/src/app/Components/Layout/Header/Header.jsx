@@ -1,17 +1,14 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // para redirecionamento
+import { useRouter } from "next/navigation";
 import { Bell } from "lucide-react";
 
 export default function Header({ onToggleSidebar }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  // Função de logout que destrói o token e redireciona
   const logout = () => {
-    // Remove token do localStorage (ou cookie se estiver usando)
-    localStorage.removeItem("token"); 
-    // Redireciona para a página de login
+    localStorage.clear();
     router.push("/");
   };
 
@@ -79,7 +76,7 @@ export default function Header({ onToggleSidebar }) {
           {open && (
             <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg">
               <button
-                onClick={logout} // <- aqui chama a função de logout
+                onClick={logout}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg cursor-pointer"
               >
                 Logout

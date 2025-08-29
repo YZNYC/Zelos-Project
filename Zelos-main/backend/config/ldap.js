@@ -13,6 +13,7 @@ const ldapOptions = {
 
 passport.use(new LdapStrategy(ldapOptions, (user, done) => {
     if (!user) return done(null, false, { message: 'Usuário não encontrado' });
+/*     console.log(user); */
     return done(null, user);
 }));
 
