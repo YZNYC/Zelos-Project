@@ -1,3 +1,5 @@
+
+
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -5,7 +7,6 @@ import axios from "axios";
 export default function ModalCreateChamado({ isOpen, onClose, onCreate }) {
   const [tecnicos, setTecnicos] = useState([]);
 
-  // Carregar técnicos quando o modal abre
   useEffect(() => {
     if (isOpen) {
       axios
@@ -23,14 +24,14 @@ export default function ModalCreateChamado({ isOpen, onClose, onCreate }) {
     const data = {
       titulo: e.target.titulo.value,
       descricao: e.target.descricao.value,
-      tipo: e.target.tipo.value, // agora bate com o name do select
+      tipo_id: e.target.tipo.value,       // corrigido para backend
       prioridade: e.target.prioridade.value,
       tecnico_id: e.target.tecnico_id.value,
     };
 
     try {
       await axios.post("http://localhost:8080/api/chamados", data);
-      onCreate();
+      if (typeof onCreate === "function") onCreate(); // só chama se existir
       onClose();
     } catch (err) {
       console.error("Erro ao criar chamado:", err);
@@ -81,12 +82,12 @@ export default function ModalCreateChamado({ isOpen, onClose, onCreate }) {
               Tipo
             </label>
             <select
-              name="tipo" // Corrigido para bater com o handleSubmit
+              name="tipo"
               className="mt-1 block w-full border border-gray-300 rounded-lg p-2 cursor-pointer"
             >
-              <option value="manutencao">Manutenção</option>
-              <option value="limpeza">Limpeza</option>
-              <option value="apoio_tecnico">Apoio Técnico</option>
+              <option value="1">Manutenção</option>
+              <option value="2">Limpeza</option>
+              <option value="3">Apoio Técnico</option>
             </select>
           </div>
 
@@ -142,3 +143,4 @@ export default function ModalCreateChamado({ isOpen, onClose, onCreate }) {
     </div>
   );
 }
+
