@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config/jwt.js';
 
-const AuthMiddleware = (...tiposPermitidos) => {
+const AuthMiddleware = (...funcoesPermitidas) => {
   return (req, res, next) => {
     const authHeader = req.headers.authorization;
 
@@ -15,7 +15,7 @@ const AuthMiddleware = (...tiposPermitidos) => {
       const decoded = jwt.verify(token, JWT_SECRET);
       req.usuario = decoded;
 
-      if (!tiposPermitidos.includes(decoded.tipo)) {
+      if (!funcoesPermitidas.includes(decoded.funcao)) {
         return res.status(403).json({ mensagem: 'Acesso negado: permissão insuficiente' });
       }
 

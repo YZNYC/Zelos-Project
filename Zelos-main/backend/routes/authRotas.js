@@ -4,69 +4,66 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config/jwt.js';
 import { create, read } from '../config/database.js';
 import AuthMiddleware from '../middlewares/authMiddleware.js';
+import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
-router.post('/login', (req, res, next) => {
-  passport.authenticate('ldapauth', { session: false }, async (err, user, info) => {
-    try {
-      if (err) {
-        console.error('Erro na autenticação LDAP:', err);
-        return res.status(500).json({ error: 'Erro interno no servidor' });
-      }
+// POST /login
+router.post('/login', async (req, res, next) => {
+  const { username, password } = req.body;
 
-      if (!user) {
-        console.warn('Falha na autenticação:', info?.message || 'Credenciais inválidas');
-        return res.status(401).json({ error: info?.message || 'Autenticação falhou' });
-      }
+  try {
+   
+    passport.authenticate('ldapauth', { session: false }, async (err, ldapUser, info) => {
+      if (err) return res.status(500).json({ error: 'Erro interno no LDAP' });
 
-      const numeroUsuario = user.sAMAccountName;
-      const nome = user.name;
+      if (ldapUser) {
+        // Usuário LDAP autenticado
+        const numeroUsuario = ldapUser.sAMAccountName;
+        const nome = ldapUser.name;
 
-      try {
-
+        // Salva no banco caso não exista
         const existingUser = await read('usuarios', 'numeroUsuario = ?', [numeroUsuario]);
-
         if (!existingUser) {
-          const userId = await create('usuarios', { numeroUsuario, nome });
-          console.log(`Novo usuário LDAP salvo no MySQL: ${numeroUsuario} (ID: ${userId})`);
-        } else {
-          console.log(`Usuário LDAP já existe no MySQL: ${numeroUsuario}`);
+          await create('usuarios', { numeroUsuario, nome, senha: null }); // senha null pq LDAP
+          console.log(`Novo usuário LDAP salvo no MySQL: ${numeroUsuario}`);
         }
-      } catch (dbError) {
-        console.error('Erro ao salvar usuário no MySQL:', dbError);
+
+        // Cria token
+        const payload = { id: numeroUsuario, tipo: 'ldap', username: numeroUsuario, displayName: nome };
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+
+        return res.json({
+          message: 'Autenticado via LDAP',
+          token,
+          user: { username: numeroUsuario, displayName: nome, email: ldapUser.mail }
+        });
       }
 
-      const payload = {
-        id: numeroUsuario,
-        tipo: 'usuario_ldap',
-        username: numeroUsuario,
-        displayName: nome
-      };
+      // 2 Se não foi LDAP, tenta no banco
+      const userDB = await read('usuarios', 'numeroUsuario = ?', [username]);
 
+      if (!userDB) return res.status(401).json({ error: 'Usuário ou senha inválidos' });
+
+      // Compara senha com bcrypt
+      const senhaValida = await bcrypt.compare(password, userDB.senha);
+      if (!senhaValida) return res.status(401).json({ error: 'Usuário ou senha inválidos' });
+
+      // Cria token
+      const payload = { id: userDB.id, tipo: 'db', username: userDB.numeroUsuario, displayName: userDB.nome };
       const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 
-      console.log('Usuário autenticado LDAP:', numeroUsuario);
-
       return res.json({
-        message: 'Autenticado com sucesso',
+        message: 'Autenticado via banco',
         token,
-        user: {
-          username: numeroUsuario,
-          displayName: nome,
-          email: user.mail
-        }
+        user: { username: userDB.numeroUsuario, displayName: userDB.nome, email: userDB.email }
       });
-    } catch (error) {
-      console.error('Erro inesperado no login:', error);
-      res.status(500).json({ error: 'Erro inesperado no servidor' });
-    }
-  })(req, res, next);
-});
+    })(req, res, next);
 
-router.get('/perfil', AuthMiddleware('usuario', 'tecnico', 'admin'), (req, res) => {
-  res.json({ mensagem: 'Acesso permitido à rota protegida', usuario: req.usuario });
+  } catch (error) {
+    console.error('Erro inesperado no login:', error);
+    res.status(500).json({ error: 'Erro inesperado no servidor' });
+  }
 });
-
 
 export default router;

@@ -178,6 +178,7 @@ export default function Chamados() {
         ) : (
           <p className="col-span-full text-center text-gray-500">Nenhum chamado encontrado.</p>
         )}
+        
       </div>
 
       <ModalEditarChamado

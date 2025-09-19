@@ -58,9 +58,10 @@ export const createChamado = async (req, res) => {
 
     res.json({
       ...novoChamado,
-      tipo_nome: tipo[0]?.titulo || null,
-      tecnico_nome: tecnico[0]?.nome || null,
-      usuario_nome: usuario[0]?.nome || null,
+      tipo_nome: tipo?.titulo || "-",
+      tecnico_nome: tecnico?.nome || "-",
+      usuario_nome: usuario?.nome || "-",
+
     });
   } catch (err) {
     console.error("Erro ao criar chamado:", err);
@@ -89,9 +90,10 @@ export const updateChamado = async (req, res) => {
 
     res.json({
       ...atualizado,
-      tipo_nome: tipo[0]?.titulo || null,
-      tecnico_nome: tecnico[0]?.nome || null,
-      usuario_nome: usuario[0]?.nome || null,
+      tipo_nome: tipo?.titulo || "-",
+      tecnico_nome: tecnico?.nome || "-",
+      usuario_nome: usuario?.nome || "-",
+
     });
   } catch (err) {
     console.error("Erro ao atualizar chamado:", err);

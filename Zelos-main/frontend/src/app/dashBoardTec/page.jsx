@@ -2,245 +2,177 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import CardStat from "../../components/dashboard/CardStat";
-import CardChartPie from "../../components/dashboard/CardChartPie";
-import CardChartLine from "../../components/dashboard/CardChartLine";
-import CardTableRecent from "../../components/dashboard/CardTableRecent";
-import ModalCreateChamado from "../../components/Modals/ModalCriarChamado";
+import ChamadoCard from "@/components/dashboard/ChamadoCard";
 
-export default function DashBoardTecnico() {
+export default function ChamadosTec() {
   const router = useRouter();
-
-  // Estados para dashboard técnico
-  const [countersTec, setCountersTec] = useState(null);
-  const [pieDataTec, setPieDataTec] = useState([]);
-  const [lineDataTec, setLineDataTec] = useState([]);
-  const [meusChamados, setMeusChamados] = useState([]);
-  const [outrosChamados, setOutrosChamados] = useState([]);
   const [user, setUser] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState("todos");
+  const [filterTipo, setFilterTipo] = useState("todos");
+  const [filterTecnico, setFilterTecnico] = useState("todos");
+
   const [tecnicos, setTecnicos] = useState([]);
   const [tipos, setTipos] = useState([]);
+  const [meusChamados, setMeusChamados] = useState([]);
+  const [outrosChamados, setOutrosChamados] = useState([]);
 
-  // Estados para dashboard geral
-  const [counters, setCounters] = useState(null);
-  const [pieData, setPieData] = useState([]);
-  const [lineData, setLineData] = useState([]);
-  const [recent, setRecent] = useState([]);
+  const API = "http://localhost:8080/api";
 
+  // -------------------- Fetch inicial --------------------
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userData = JSON.parse(localStorage.getItem("user"));
 
-    // Se não estiver logado ou não for técnico, só carrega dashboard geral
     if (!token || !userData) {
-      fetchDashboardGeral(token);
+      router.push("/");
       return;
     }
 
     setUser(userData);
 
-    // Se for técnico, carrega ambos
-    fetchDashboardTec(token);
-    fetchDashboardGeral(token);
-  }, [router]);
+    fetchTecnicos();
+    fetchTipos();
+    fetchChamados(userData.id);
 
-  // Dashboard técnico
-  const fetchDashboardTec = async (token) => {
+    setLoading(false);
+  }, []);
+
+  // -------------------- Funções de fetch --------------------
+  const fetchTecnicos = async () => {
     try {
-      const headers = { Authorization: `Bearer ${token}` };
-      const [
-        resCounters,
-        resPie,
-        resLine,
-        resMeus,
-        resOutros,
-        resTecnicos,
-        resTipos,
-      ] = await Promise.all([
-        axios.get("http://localhost:8080/api/tecnico/dashboard/counters", { headers }),
-        axios.get("http://localhost:8080/api/tecnico/dashboard/pie", { headers }),
-        axios.get("http://localhost:8080/api/tecnico/dashboard/line", { headers }),
-        axios.get("http://localhost:8080/api/tecnico/chamados/meus", { headers }),
-        axios.get("http://localhost:8080/api/tecnico/chamados/outros", { headers }),
-        axios.get("http://localhost:8080/api/usuarios/tecnicos", { headers }),
-        axios.get("http://localhost:8080/api/chamados/tipos", { headers }),
-      ]);
-
-      setCountersTec(resCounters.data);
-      setPieDataTec(resPie.data);
-      setLineDataTec(resLine.data);
-      setMeusChamados(resMeus.data);
-      setOutrosChamados(resOutros.data);
-      setTecnicos(resTecnicos.data);
-      setTipos(resTipos.data);
+      const res = await axios.get(`${API}/chamados/tecnicos`);
+      setTecnicos(res.data);
     } catch (error) {
-      console.error(error);
-      if (error.response?.status === 401) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        router.push("/");
-      }
+      console.error("Erro ao buscar técnicos:", error);
     }
   };
 
-  // Dashboard geral
-  const fetchDashboardGeral = async (token) => {
-    if (!token) {
-      router.push("/");
-      return;
-    }
+  const fetchTipos = async () => {
     try {
-      const headers = { Authorization: `Bearer ${token}` };
-      const [
-        resCounters,
-        resPie,
-        resLine,
-        resRecent,
-      ] = await Promise.all([
-        axios.get("http://localhost:8080/api/dashboard/counters", { headers }),
-        axios.get("http://localhost:8080/api/dashboard/pie", { headers }),
-        axios.get("http://localhost:8080/api/dashboard/line", { headers }),
-        axios.get("http://localhost:8080/api/dashboard/recent", { headers }),
-      ]);
-      setCounters(resCounters.data);
-      setPieData(resPie.data);
-      setLineData(resLine.data);
-      setRecent(resRecent.data);
+      const res = await axios.get(`${API}/chamados/tipos`);
+      setTipos(res.data);
     } catch (error) {
-      console.error("Erro ao carregar dados do dashboard:", error);
-      if (error.response?.status === 401) {
-        localStorage.removeItem("token");
-        router.push("/");
-      }
+      console.error("Erro ao buscar tipos:", error);
     }
   };
 
-  // Função para atualizar a lista quando um chamado for criado
-  const handleNovoChamado = (chamadoCriado) => {
-    if (chamadoCriado.tecnico_id === user?.id) {
-      setMeusChamados((prev) => [chamadoCriado, ...prev]);
-    } else {
-      setOutrosChamados((prev) => [chamadoCriado, ...prev]);
-    }
-  };
-
-  // Atualiza o status de um chamado do técnico
-  const handleAtualizarStatus = async (idChamado, novoStatus) => {
-    const token = localStorage.getItem("token");
+  const fetchChamados = async (userId) => {
     try {
-      await axios.put(
-        `http://localhost:8080/api/tecnico/chamados/${idChamado}/status`,
-        { status: novoStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setMeusChamados((prev) =>
-        prev.map((c) => (c.id === idChamado ? { ...c, status: novoStatus } : c))
-      );
+      const res = await axios.get(`${API}/chamados`);
+      const todosChamados = res.data;
+
+      setMeusChamados(todosChamados.filter(c => c.tecnico_id === userId));
+      setOutrosChamados(todosChamados.filter(c => c.tecnico_id !== userId));
     } catch (error) {
-      console.error("Erro ao atualizar status:", error);
+      console.error("Erro ao buscar chamados:", error);
     }
   };
 
-  // Solicitar ajuda em um chamado de outro técnico
-  const handleRequestHelp = async (idChamado) => {
-    const token = localStorage.getItem("token");
-    try {
-      await axios.post(
-        `http://localhost:8080/api/tecnico/chamados/${idChamado}/request-help`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert("Solicitação de ajuda enviada!");
-    } catch (error) {
-      console.error("Erro ao solicitar ajuda:", error);
-    }
-  };
+  // -------------------- Função de filtragem --------------------
+  const filterChamados = (lista) =>
+    lista.filter((chamado) => {
+      const matchesSearchTerm =
+        chamado.titulo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        chamado.descricao?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        chamado.id?.toString().includes(searchTerm.toLowerCase()) ||
+        (chamado.tipo_nome && chamado.tipo_nome.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (chamado.tecnico_nome && chamado.tecnico_nome.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (chamado.usuario_nome && chamado.usuario_nome.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  // Renderização condicional: técnico vê ambos, outros só o geral
-  if (user?.funcao === "tecnico") {
-    if (!countersTec) return <div className="p-4">Carregando...</div>;
-    return (
-      <main className="ml-0 mt-[88px] sm:mt-[165px] p-4 overflow-y-auto">
-        <div className="grid grid-cols-12 gap-6">
-          {/* Cards de estatísticas técnico */}
-          <div className="col-span-12 grid grid-cols-12 gap-6 mb-6">
-            <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-              <CardStat title="Chamados abertos" value={countersTec.abertos} />
-            </div>
-            <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-              <CardStat title="Em andamento" value={countersTec.andamento} />
-            </div>
-            <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-              <CardStat title="Finalizados" value={countersTec.finalizados} />
-            </div>
-            <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-              <CardStat
-                title="Tempo médio de resolução"
-                value={countersTec.tempoMedioHoras}
-                suffix="h"
-              />
-            </div>
-          </div>
-          {/* Gráficos técnico */}
-          <div className="col-span-12 xl:col-span-4 min-h-[300px]">
-            <CardChartPie data={pieDataTec} />
-          </div>
-          <div className="col-span-12 xl:col-span-8 min-h-[300px]">
-            <CardChartLine data={lineDataTec} />
-          </div>
-          {/* Tabela de meus chamados */}
-          <div className="col-span-12 mt-6">
-            <h2 className="text-xl font-bold mb-2">Meus Chamados</h2>
-            <CardTableRecent
-              rows={meusChamados}
-              onUpdateStatus={handleAtualizarStatus}
-              tecnicoId={user.id}
-            />
-          </div>
-          {/* Tabela de chamados de outros técnicos */}
-          <div className="col-span-12 mt-6">
-            <h2 className="text-xl font-bold mb-2">Chamados de outros técnicos</h2>
-            <CardTableRecent
-              rows={outrosChamados}
-              onRequestHelp={handleRequestHelp}
-              tecnicoId={user.id}
-            />
-          </div>
+      const matchesStatus = filterStatus === "todos" || chamado.status === filterStatus;
+      const matchesTipo = filterTipo === "todos" || chamado.tipo_id === parseInt(filterTipo);
+      const matchesTecnico = filterTecnico === "todos" || chamado.tecnico_id === parseInt(filterTecnico);
+
+      return matchesSearchTerm && matchesStatus && matchesTipo && matchesTecnico;
+    });
+
+  if (loading) return <div className="p-4">Carregando chamados...</div>;
+
+  // -------------------- Render --------------------
+  return (
+    <div className="p-6 mt-20">
+      <h1 className="text-5xl font-bold mb-8">Chamados</h1>
+
+      {/* ----- Filtros ----- */}
+      <div className="flex flex-wrap items-center gap-4 mb-6">
+        <input
+          type="text"
+          placeholder="Pesquisar chamados..."
+          className="p-2 border border-gray-300 rounded-lg w-full sm:w-auto flex-grow"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          className="p-2 border border-gray-300 rounded-lg cursor-pointer bg-white"
+        >
+          <option value="todos">Todos os Status</option>
+          <option value="pendente">Pendente</option>
+          <option value="em andamento">Em Andamento</option>
+          <option value="concluido">Concluído</option>
+        </select>
+
+        <select
+          value={filterTipo}
+          onChange={(e) => setFilterTipo(e.target.value)}
+          className="p-2 border border-gray-300 rounded-lg cursor-pointer bg-white"
+        >
+          <option value="todos">Todos os Tipos</option>
+          {tipos.map((tipo) => (
+            <option key={tipo.id} value={tipo.id}>
+              {tipo.titulo.charAt(0).toUpperCase() + tipo.titulo.slice(1).replace("_", " ")}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={filterTecnico}
+          onChange={(e) => setFilterTecnico(e.target.value)}
+          className="p-2 border border-gray-300 rounded-lg cursor-pointer bg-white"
+        >
+          <option value="todos">Todos os Técnicos</option>
+          {tecnicos.map((tecnico) => (
+            <option key={tecnico.id} value={tecnico.id}>
+              {tecnico.nome}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* ----- Meus chamados ----- */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-2">Atribuídos</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+          {meusChamados.length > 0 ? (
+            filterChamados(meusChamados).map((chamado) => (
+              <ChamadoCard key={chamado.id} chamado={chamado} />
+            ))
+          ) : (
+            <p className="col-span-full text-center text-gray-500">
+              Nenhum chamado atribuído a você.
+            </p>
+          )}
         </div>
-      </main>
-    );
-  } else {
-    // Dashboard geral para outros usuários
-    if (!counters) return <div className="p-4">Carregando...</div>;
-    return (
-      <main className="mt-[88px] p-4 overflow-y-auto">
-        <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-12 grid grid-cols-12 gap-6">
-            <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-              <CardStat title="Chamados abertos" value={counters.abertos} />
-            </div>
-            <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-              <CardStat title="Chamados em andamento" value={counters.andamento} />
-            </div>
-            <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-              <CardStat title="Chamados finalizados" value={counters.finalizados} />
-            </div>
-            <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-              <CardStat title="Tempo médio de resolução" value={counters.tempoMedioHoras} suffix="h" />
-            </div>
-          </div>
-          <div className="col-span-12 xl:col-span-4 min-h-[300px]">
-            <CardChartPie data={pieData} />
-          </div>
-          <div className="col-span-12 xl:col-span-8 min-h-[300px]">
-            <CardChartLine data={lineData} />
-          </div>
-          <div className="col-span-12">
-            <CardTableRecent rows={recent} />
-          </div>
+      </section>
+
+      {/* ----- Outros chamados ----- */}
+      <section>
+        <h2 className="text-2xl font-semibold mb-2">Chamados de outros técnicos</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+          {filterChamados(outrosChamados).length > 0 ? (
+            filterChamados(outrosChamados).map((chamado) => (
+              <ChamadoCard key={chamado.id} chamado={chamado} />
+            ))
+          ) : (
+            <p className="col-span-full text-center text-gray-500">Nenhum chamado encontrado.</p>
+          )}
         </div>
-      </main>
-    );
-  }
+      </section>
+    </div>
+  );
 }

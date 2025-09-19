@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import authRotas from './routes/authRotas.js';
 import dashboardRotas from "./routes/dashboardRoute.js";
 import chamadosRotas from "./routes/ChamadoRoute.js";
+import cadastroRotas from './routes/CadastroRoute.js';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/auth', authRotas);
 app.use("/api/dashboard", dashboardRotas);
 app.use("/api/chamados", chamadosRotas);
+app.use('/api/usuarios', cadastroRotas)
 
 // Health check
 app.get('/health', (req, res) => {

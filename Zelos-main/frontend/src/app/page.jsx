@@ -99,27 +99,26 @@ export default function LoginPage() {
   const [erro, setErro] = useState("");
   const router = useRouter();
 
-useEffect(() => {
-  const token = localStorage.getItem("token");
-  const userData = localStorage.getItem("user");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userData = localStorage.getItem("user");
 
-  if (token && userData) {
-    try {
-      const user = JSON.parse(userData);
+    if (token && userData) {
+      try {
+        const user = JSON.parse(userData);
 
-      if (user.funcao === "usuario") router.replace("/dashBoardUser");
-      else if (user.funcao === "tecnico") router.replace("/dashBoardTec");
-      else if (user.funcao === "admin") router.replace("/dashBoard");
-    } catch {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+        if (user.funcao === "usuario") router.replace("/dashBoardUser");
+        else if (user.funcao === "tecnico") router.replace("/dashBoardTec");
+        else if (user.funcao === "admin") router.replace("/dashBoard");
+      } catch {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      }
     }
-  }
-}, [router]); 
+  }, [router]);
 
 
-
- const handleLogin = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const res = await fetch("http://localhost:8080/auth/login", {
@@ -138,13 +137,15 @@ useEffect(() => {
         data.user.funcao === "usuario"
           ? "/dashBoardUser"
           : data.user.funcao === "tecnico"
-          ? "/dashBoardTec"
-          : "/dashBoard"
+            ? "/dashBoardTec"
+            : "/dashBoard"
       );
+
     } catch (err) {
       setErro(err.message);
     }
   };
+
   return (
     <main className="relative min-h-screen flex items-center justify-center overflow-hidden text-white font-sans bg-cover bg-center">
       <div className="fixed top-0 left-10 flex items-center mt-[-40] z-40 rounded-br-lg">

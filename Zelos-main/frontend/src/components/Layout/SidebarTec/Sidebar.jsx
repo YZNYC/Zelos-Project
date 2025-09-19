@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const MENUS = [
   { title: "Visão geral", link: "/dashBoardTec" },
-  { title: "Chamados", link: "/ChamadosTec" },
+  // { title: "Chamados", link: "/ChamadosTec" },
   { title: "Relatórios", link: "/dashBoardTec/Relatorios" },
   { title: "Configurações", link: "/dashBoardTec/Configuracoes" },
 ];
