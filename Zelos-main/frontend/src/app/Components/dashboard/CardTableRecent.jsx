@@ -7,7 +7,7 @@ export default function CardTableRecent({ title = "Chamados recentes", rows = []
     <CardShell title={title} className="h-[460px]">
       <div className="h-[380px] overflow-y-auto pr-2">
         <table className="w-full text-sm">
-          <thead className="sticky top-0 bg-white z-10">
+          <thead className="sticky top-0 bg-gray-100 z-10">
             <tr className="text-gray-500 border-b">
               <th className="py-2 text-left font-medium">Protocolo</th>
               <th className="py-2 text-left font-medium">Descrição</th>
@@ -18,7 +18,7 @@ export default function CardTableRecent({ title = "Chamados recentes", rows = []
           </thead>
           <tbody>
             {rows.map((r, i) => (
-              <tr key={i} className="border-b last:border-0 hover:bg-gray-50">
+              <tr key={i} className="border-b last:border-0 hover:bg-gray-300">
                 <td className="py-2 font-medium text-gray-800">{r.protocolo}</td>
                 <td className="py-2 text-gray-700">{r.descricao}</td>
                 <td className="py-2">

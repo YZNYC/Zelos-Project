@@ -99,15 +99,8 @@ export default function LoginPage() {
   const [erro, setErro] = useState("");
   const router = useRouter();
 
-  // Checagem simples de token
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) router.push("/dashBoard");
-  }, []);
-
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const res = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
@@ -116,13 +109,25 @@ export default function LoginPage() {
       });
 
       const data = await res.json();
-
       if (!res.ok) throw new Error(data.error || "Erro ao fazer login");
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      router.push("/dashBoard");
+      // Redireciona baseado na role
+      switch (data.user.role) {
+        case "admin":
+          router.push("/admin/dashboard");
+          break;
+        case "tecnico":
+          router.push("/tecnico/painel");
+          break;
+        case "usuario":
+          router.push("/usuario/home");
+          break;
+        default:
+          router.push("/dashBoard");
+      }
     } catch (err) {
       setErro(err.message);
     }
@@ -143,7 +148,7 @@ export default function LoginPage() {
       <div className="hidden lg:block"><ParticleBackground /></div>
       <div className="absolute inset-0 bg-cover bg-center sm:block lg:hidden" style={{ backgroundColor: "#2C2C2C" }} />
 
-      <section className="relative bg-black/70 p-10 rounded-lg max-w-sm w-full text-center shadow-xl z-20 w-[90%] sm:max-w-sm">
+      <section className="relative bg-black/70 p-10 rounded-lg max-w-sm text-center shadow-xl z-20 w-[90%] sm:max-w-sm">
         <h1 className="text-3xl font-bold mb-8">Login</h1>
 
         <form className="flex flex-col gap-4 text-left" onSubmit={handleLogin}>

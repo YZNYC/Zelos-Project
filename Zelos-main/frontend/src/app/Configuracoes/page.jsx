@@ -42,8 +42,8 @@ export default function Configuracoes() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8 transition-colors duration-300">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8 transition-colors duration-300 ">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100 mt-20">
         Configurações
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

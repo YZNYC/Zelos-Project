@@ -15,7 +15,7 @@ export default function Header({ onToggleSidebar }) {
   return (
     <header
       className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 sm:px-6"
-      style={{ backgroundColor: "#ED1C24", height: "165px" }}
+      style={{ backgroundColor: "#ED1C24", height: "120px" }}
     >
       <style jsx>{`
         @media (max-width: 639px) {
@@ -52,7 +52,7 @@ export default function Header({ onToggleSidebar }) {
       <img
         src="/Zelos-Logo-Header.png"
         alt="Logo"
-        className="h-16 sm:h-28 md:h-65 md:mt-2 md:ml-[-70px] object-contain -mt-6 sm:-mt-16"
+        className="h-16 sm:h-28 md:h-50 md:mt-2 md:ml-[-60px] object-contain -mt-6 sm:-mt-16"
       />
 
       <div className="w-9" />
