@@ -1,7 +1,6 @@
- DROP DATABASE zelo;
-    CREATE DATABASE zelo;
-    USE zelo;
-    
+DROP DATABASE zelo;
+CREATE DATABASE zelo;
+USE zelo;
     -- Criação da tabela `usuarios`
     CREATE TABLE usuarios (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -9,6 +8,7 @@
         numeroUsuario VARCHAR(255) NOT NULL UNIQUE,
         funcao ENUM ('admin','tecnico','usuario') DEFAULT 'usuario',
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
+       
         criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
@@ -182,3 +182,10 @@ INSERT INTO chamados (titulo, descricao, tipo_id, tecnico_id, usuario_id, status
 ('Chamado 22-08 L3', 'Limpeza pós-obra', 2, 2, 6, 'em andamento', '2025-08-22 11:20:00'),
 ('Chamado 22-08 M3', 'Manutenção predial', 1, 2, 5, 'pendente', '2025-08-22 11:50:00'),
 ('Chamado 22-08 AT3', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-08-22 12:25:00');
+
+
+
+-- Alterar a função de um usuário pelo número de usuário
+UPDATE usuarios
+SET funcao = 'tecnico'  -- nova função: 'admin', 'tecnico' ou 'usuario'
+WHERE numeroUsuario = '24250467';

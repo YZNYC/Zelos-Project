@@ -19,7 +19,7 @@ export async function criarApontamentoController(req, res) {
     const data = req.body;
     const apontamentoCriado = await model.criarApontamentoModel(data);
     res.status(201).json({ id: apontamentoCriado, ...data });
-  } catch (error) {
+  } catch (error) {AC
     res.status(500).json({ error: 'Erro ao criar apontamento.' });
   }
 }

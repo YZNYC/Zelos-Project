@@ -2,13 +2,13 @@
 import Link from "next/link";
 
 const MENUS = [
-  { title: "Visão geral", link: "/dashBoard" },
-  { title: "Chamados", link: "/Chamados" },
-  { title: "Relatórios", link: "/Relatorios" },
-  { title: "Configurações", link: "/Configuracoes" },
+  { title: "Visão geral", link: "/dashBoardTec" },
+  { title: "Chamados", link: "/ChamadosTec" },
+  { title: "Relatórios", link: "/dashBoardTec/Relatorios" },
+  { title: "Configurações", link: "/dashBoardTec/Configuracoes" },
 ];
 
-const SIDEBAR_WIDTH_REM = 22.5; // 22.5rem (equiv. ao seu w-90)
+const SIDEBAR_WIDTH_REM = 18.5; // 22.5rem (equiv. ao seu w-90)
 
 export default function Sidebar({ open, onClose }) {
   return (
@@ -19,7 +19,7 @@ export default function Sidebar({ open, onClose }) {
         onClick={onClose}
       />
       <aside
-        className={`fixed bottom-0 left-0 z-50 h-[calc(100%-165px)] sm:flex hidden flex-col justify-between p-5 pt-8`}
+        className={`fixed bottom-0 left-0 z-50 h-[calc(100%-100px)] sm:flex hidden flex-col justify-between p-5 pt-8`}
         style={{ backgroundColor: "#002F6C", width: `${SIDEBAR_WIDTH_REM}rem` }}
       >
         <nav>

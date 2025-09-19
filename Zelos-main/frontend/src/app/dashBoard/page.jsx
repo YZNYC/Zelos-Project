@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import CardStat from "../Components/dashboard/CardStat";
-import CardChartPie from "../Components/dashboard/CardChartPie";
-import CardChartLine from "../Components/dashboard/CardChartLine";
-import CardTableRecent from "../Components/dashboard/CardTableRecent";
+import CardStat from "@/components/dashboard/CardStat";
+import CardChartPie from "@/components/dashboard/CardChartPie";
+import CardChartLine from "@/components/dashboard/CardChartLine";
+import CardTableRecent from "@/components/dashboard/CardTableRecent";
 
 export default function DashBoard() {
   const router = useRouter();
@@ -52,7 +52,7 @@ export default function DashBoard() {
   if (!counters) return <div className="p-4">Carregando...</div>;
 
   return (
-    <main className="ml-0 mt-[88px] sm:mt-[165px] p-4 overflow-y-auto">
+    <main className=" mt-[88px] p-4 overflow-y-auto">
       <div className="grid grid-cols-12 gap-6">
 
         <div className="col-span-12 grid grid-cols-12 gap-6">

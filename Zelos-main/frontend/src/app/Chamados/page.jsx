@@ -2,9 +2,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import ChamadoCard from "../Components/dashboard/ChamadoCard";
-import ModalEditarChamado from "../Components/Modals/ModalEditarChamado";
-import ModalCreateChamado from "../Components/Modals/ModalCriarChamado";
+import ChamadoCard from "@/components/dashboard/ChamadoCard";
+import ModalEditarChamado from "@/components/Modals/ModalEditarChamado";
+import ModalCreateChamado from "@/components/Modals/ModalCriarChamado";
 
 export default function Chamados() {
   const [chamados, setChamados] = useState([]);

@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "./Components/Layout/HeaderLogin/Header";
+import Header from "../components/Layout/HeaderLogin/Header";
 
 function ParticleBackground() {
   const canvasRef = useRef(null);
@@ -99,15 +99,28 @@ export default function LoginPage() {
   const [erro, setErro] = useState("");
   const router = useRouter();
 
-  // Checagem simples de token
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) router.push("/dashBoard");
-  }, []);
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  const userData = localStorage.getItem("user");
 
-  const handleLogin = async (e) => {
+  if (token && userData) {
+    try {
+      const user = JSON.parse(userData);
+
+      if (user.funcao === "usuario") router.replace("/dashBoardUser");
+      else if (user.funcao === "tecnico") router.replace("/dashBoardTec");
+      else if (user.funcao === "admin") router.replace("/dashBoard");
+    } catch {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    }
+  }
+}, [router]); 
+
+
+
+ const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const res = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
@@ -116,18 +129,22 @@ export default function LoginPage() {
       });
 
       const data = await res.json();
-
       if (!res.ok) throw new Error(data.error || "Erro ao fazer login");
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      router.push("/dashBoard");
+      router.push(
+        data.user.funcao === "usuario"
+          ? "/dashBoardUser"
+          : data.user.funcao === "tecnico"
+          ? "/dashBoardTec"
+          : "/dashBoard"
+      );
     } catch (err) {
       setErro(err.message);
     }
   };
-
   return (
     <main className="relative min-h-screen flex items-center justify-center overflow-hidden text-white font-sans bg-cover bg-center">
       <div className="fixed top-0 left-10 flex items-center mt-[-40] z-40 rounded-br-lg">

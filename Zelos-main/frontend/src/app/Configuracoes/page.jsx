@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import ModalEditarConta from "../Components/Modals/ModalEditarConta";
+import ModalEditarConta from "../../components/Modals/ModalEditarConta";
 
 export default function Configuracoes() {
   const [tema, setTema] = useState("claro");
@@ -11,9 +11,9 @@ export default function Configuracoes() {
 
   useEffect(() => {
 
-    const temaSalvo = localStorage.getItem("tema") || "claro";
-    setTema(temaSalvo);
-    document.documentElement.className = temaSalvo === "escuro" ? "dark" : "";
+    // const temaSalvo = localStorage.getItem("tema") || "claro";
+    // setTema(temaSalvo);
+    // document.documentElement.className = temaSalvo === "escuro" ? "dark" : "";
 
 
     const userStorage = localStorage.getItem("user");
@@ -26,11 +26,11 @@ export default function Configuracoes() {
     }
   }, []);
 
-  const alterarTema = (novoTema) => {
-    setTema(novoTema);
-    localStorage.setItem("tema", novoTema);
-    document.documentElement.className = novoTema === "escuro" ? "dark" : "";
-  };
+  // const alterarTema = (novoTema) => {
+  //   setTema(novoTema);
+  //   localStorage.setItem("tema", novoTema);
+  //   document.documentElement.className = novoTema === "escuro" ? "dark" : "";
+  // };
 
   const handleSaveUser = (dados) => {
     setUser(dados);
@@ -42,7 +42,7 @@ export default function Configuracoes() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8 transition-colors duration-300">
+    <div className="min-h-screen  dark:bg-gray-900 p-8 transition-colors duration-300">
       <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">
         Configurações
       </h1>
@@ -92,7 +92,7 @@ export default function Configuracoes() {
             <option>English</option>
           </select>
         </div>
-
+{/* 
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
           <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Tema</h2>
           <div className="flex gap-4">
@@ -109,7 +109,7 @@ export default function Configuracoes() {
               Escuro
             </button>
           </div>
-        </div>
+        </div> */}
 
       </div>
 

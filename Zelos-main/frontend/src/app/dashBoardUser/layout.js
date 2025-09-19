@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import Sidebar from "../Components/Layout/SidebarUser/Sidebar";
-import Header from "../Components/Layout/Header/Header";
+import Sidebar from "../../components/Layout/SidebarUser/Sidebar";
+import Header from "../../components/Layout/Header/Header";
 
 export default function Layout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);

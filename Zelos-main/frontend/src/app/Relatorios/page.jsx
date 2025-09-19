@@ -1,5 +1,5 @@
 "use client";
-import CardRelatorio from "../Components/dashboard/CardRelatorio";
+import CardRelatorio from "@/components/dashboard/CardRelatorio";
 import { relatorios } from "../lib/mockDashBoardData";
 
 export default function Dashboard() {

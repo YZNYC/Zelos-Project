@@ -10,29 +10,31 @@ export default function ModalCreateChamado({ isOpen, onClose, onCreate, tecnicos
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const data = {
-      titulo: e.target.titulo.value,
-      descricao: e.target.descricao.value,
-      tipo_id: e.target.tipo.value,
-      prioridade: e.target.prioridade.value, // Adicionei 'prioridade' que está no seu modal, mas não no controller.
-      tecnico_id: e.target.tecnico_id.value,
-      // usuario_id pode ser adicionado aqui se for fixo ou via contexto de autenticação
-    };
-
-    try {
-      // Alerta: No seu controller `createChamado`, não há campo para `prioridade`.
-      // Se você quiser salvar a prioridade, precisará adicioná-la à tabela `chamados`
-      // e ao `createChamado` no backend. Por enquanto, ela será ignorada no POST.
-      await axios.post("http://localhost:8080/api/chamados", data);
-      if (typeof onCreate === "function") onCreate();
-      onClose();
-    } catch (err) {
-      console.error("Erro ao criar chamado:", err.response?.data || err);
-    }
+  const data = {
+    titulo: e.target.titulo.value,
+    descricao: e.target.descricao.value,
+    tipo_id: e.target.tipo.value,
+    prioridade: e.target.prioridade.value,
+    tecnico_id: e.target.tecnico_id.value,
   };
+
+  try {
+    const res = await axios.post("http://localhost:8080/api/chamados", data);
+    const chamadoCriado = res.data;
+
+    // Atualiza a dashboard diretamente
+    if (typeof onCreate === "function") onCreate(chamadoCriado);
+
+    onClose();
+  } catch (err) {
+    console.error("Erro ao criar chamado:", err.response?.data || err);
+  }
+};
+
+  
 
   return (
     <div

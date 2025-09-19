@@ -5,11 +5,10 @@ const MENUS = [
   { title: "Visão geral", link: "/dashBoard" },
   { title: "Chamados", link: "/Chamados" },
   { title: "Relatórios", link: "/Relatorios" },
-  { title: "Técnicos", link: "/RotaAluno" },
   { title: "Configurações", link: "/Configuracoes" },
 ];
 
-const SIDEBAR_WIDTH_REM = 22.5; // 22.5rem (equiv. ao seu w-90)
+const SIDEBAR_WIDTH_REM = 18.5;// 22.5rem (equiv. ao seu w-90)
 
 export default function Sidebar({ open, onClose }) {
   return (
@@ -21,7 +20,7 @@ export default function Sidebar({ open, onClose }) {
       />
 
       <aside
-        className={`fixed bottom-0 left-0 z-50 h-[calc(100%-165px)] sm:flex hidden flex-col justify-between p-5 pt-8`}
+      className={`fixed bottom-0 left-0 z-50 h-[calc(100%-100px)] sm:flex hidden flex-col justify-between p-5 pt-8`}
         style={{ backgroundColor: "#002F6C", width: `${SIDEBAR_WIDTH_REM}rem` }}
       >
         <nav>
@@ -42,7 +41,6 @@ export default function Sidebar({ open, onClose }) {
           <strong>Zelos © 2025 - Escola SENAI<br/>Armando de Arruda Pereira</strong>
         </div>
       </aside>
-
       {/* Drawer mobile */}
       <aside
         className={`sm:hidden fixed top-[88px] bottom-0 left-0 z-50 transition-transform duration-300 p-5 pt-8 flex flex-col justify-between`}
