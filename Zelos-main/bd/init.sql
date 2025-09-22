@@ -95,90 +95,90 @@ INSERT INTO pool (titulo, descricao, status, created_by, updated_by) VALUES
 ('externo', 'Consultoria externa', 'ativo', 1, 1);
 
 -- ============================
--- 16/08 - 3 chamados (dia leve)
+-- 16/09 - 3 chamados (dia leve)
 -- ============================
 INSERT INTO chamados (titulo, descricao, tipo_id, tecnico_id, usuario_id, status, criado_em) VALUES
-('Chamado 16-08 L1', 'Limpeza rotina', 2, 2, 4, 'pendente', '2025-08-16 08:05:00'),
-('Chamado 16-08 AT1', 'Suporte remoto', 3, 3, 5, 'em andamento', '2025-08-16 09:30:00'),
-('Chamado 16-08 M1', 'Manutenção predial', 1, 2, 6, 'concluido', '2025-08-16 11:15:00');
+('Chamado 16-09 L1', 'Limpeza rotina', 2, 2, 4, 'pendente', '2025-09-16 09:05:00'),
+('Chamado 16-09 AT1', 'Suporte remoto', 3, 3, 5, 'em andamento', '2025-09-16 09:30:00'),
+('Chamado 16-09 M1', 'Manutenção predial', 1, 2, 6, 'concluido', '2025-09-16 11:15:00');
 
 -- ============================
--- 17/08 - 12 chamados (dia pesado)
+-- 17/09 - 12 chamados (dia pesado)
 -- ============================
 INSERT INTO chamados (titulo, descricao, tipo_id, tecnico_id, usuario_id, status, criado_em) VALUES
-('Chamado 17-08 M1', 'Manutenção elétrica', 1, 2, 4, 'pendente', '2025-08-17 07:50:00'),
-('Chamado 17-08 L1', 'Limpeza pesada', 2, 2, 5, 'em andamento', '2025-08-17 08:20:00'),
-('Chamado 17-08 AT1', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-08-17 08:45:00'),
-('Chamado 17-08 M2', 'Revisão hidráulica', 1, 2, 6, 'pendente', '2025-08-17 09:15:00'),
-('Chamado 17-08 L2', 'Limpeza pós-obra', 2, 2, 4, 'em andamento', '2025-08-17 09:50:00'),
-('Chamado 17-08 AT2', 'Configuração de sistema', 3, 3, 5, 'em andamento', '2025-08-17 10:30:00'),
-('Chamado 17-08 E1', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-08-17 11:05:00'),
-('Chamado 17-08 L3', 'Limpeza rotina', 2, 2, 6, 'pendente', '2025-08-17 11:45:00'),
-('Chamado 17-08 M3', 'Manutenção predial', 1, 2, 5, 'em andamento', '2025-08-17 12:10:00'),
-('Chamado 17-08 AT3', 'Suporte remoto', 3, 3, 4, 'concluido', '2025-08-17 12:40:00'),
-('Chamado 17-08 L4', 'Limpeza pesada', 2, 2, 6, 'em andamento', '2025-08-17 13:15:00'),
-('Chamado 17-08 E2', 'Consultoria externa', 4, 3, 5, 'pendente', '2025-08-17 14:00:00');
+('Chamado 17-09 M1', 'Manutenção elétrica', 1, 2, 4, 'pendente', '2025-09-17 07:50:00'),
+('Chamado 17-09 L1', 'Limpeza pesada', 2, 2, 5, 'em andamento', '2025-09-17 09:20:00'),
+('Chamado 17-09 AT1', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-09-17 09:45:00'),
+('Chamado 17-09 M2', 'Revisão hidráulica', 1, 2, 6, 'pendente', '2025-09-17 09:15:00'),
+('Chamado 17-09 L2', 'Limpeza pós-obra', 2, 2, 4, 'em andamento', '2025-09-17 09:50:00'),
+('Chamado 17-09 AT2', 'Configuração de sistema', 3, 3, 5, 'em andamento', '2025-09-17 10:30:00'),
+('Chamado 17-09 E1', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-09-17 11:05:00'),
+('Chamado 17-09 L3', 'Limpeza rotina', 2, 2, 6, 'pendente', '2025-09-17 11:45:00'),
+('Chamado 17-09 M3', 'Manutenção predial', 1, 2, 5, 'em andamento', '2025-09-17 12:10:00'),
+('Chamado 17-09 AT3', 'Suporte remoto', 3, 3, 4, 'concluido', '2025-09-17 12:40:00'),
+('Chamado 17-09 L4', 'Limpeza pesada', 2, 2, 6, 'em andamento', '2025-09-17 13:15:00'),
+('Chamado 17-09 E2', 'Consultoria externa', 4, 3, 5, 'pendente', '2025-09-17 14:00:00');
 
 -- ============================
 -- 18/08 - 2 chamados (dia muito leve)
 -- ============================
 INSERT INTO chamados (titulo, descricao, tipo_id, tecnico_id, usuario_id, status, criado_em) VALUES
-('Chamado 18-08 M1', 'Manutenção predial', 1, 2, 4, 'pendente', '2025-08-18 09:10:00'),
-('Chamado 18-08 AT1', 'Suporte remoto', 3, 3, 5, 'em andamento', '2025-08-18 10:50:00');
+('Chamado 18-09 M1', 'Manutenção predial', 1, 2, 4, 'pendente', '2025-09-19 09:10:00'),
+('Chamado 19-09 AT1', 'Suporte remoto', 3, 3, 5, 'em andamento', '2025-09-19 10:50:00');
 
 -- ============================
--- 19/08 - 8 chamados (médio)
+-- 19/09 - 9 chamados (médio)
 -- ============================
 INSERT INTO chamados (titulo, descricao, tipo_id, tecnico_id, usuario_id, status, criado_em) VALUES
-('Chamado 19-08 M1', 'Revisão elétrica', 1, 2, 5, 'pendente', '2025-08-19 07:35:00'),
-('Chamado 19-08 L1', 'Limpeza rotina', 2, 2, 4, 'em andamento', '2025-08-19 08:10:00'),
-('Chamado 19-08 AT1', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-08-19 08:40:00'),
-('Chamado 19-08 M2', 'Manutenção hidráulica', 1, 2, 6, 'pendente', '2025-08-19 09:20:00'),
-('Chamado 19-08 L2', 'Limpeza pesada', 2, 2, 5, 'em andamento', '2025-08-19 10:05:00'),
-('Chamado 19-08 AT2', 'Configuração de sistema', 3, 3, 4, 'pendente', '2025-08-19 11:00:00'),
-('Chamado 19-08 E1', 'Consultoria externa', 4, 3, 5, 'em andamento', '2025-08-19 11:45:00'),
-('Chamado 19-08 L3', 'Limpeza pós-obra', 2, 2, 6, 'pendente', '2025-08-19 12:30:00');
+('Chamado 19-09 M1', 'Revisão elétrica', 1, 2, 5, 'pendente', '2025-09-19 07:35:00'),
+('Chamado 19-09 L1', 'Limpeza rotina', 2, 2, 4, 'em andamento', '2025-09-19 09:10:00'),
+('Chamado 19-09 AT1', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-09-19 09:40:00'),
+('Chamado 19-09 M2', 'Manutenção hidráulica', 1, 2, 6, 'pendente', '2025-09-19 09:20:00'),
+('Chamado 19-09 L2', 'Limpeza pesada', 2, 2, 5, 'em andamento', '2025-09-19 10:05:00'),
+('Chamado 19-09 AT2', 'Configuração de sistema', 3, 3, 4, 'pendente', '2025-09-19 11:00:00'),
+('Chamado 19-09 E1', 'Consultoria externa', 4, 3, 5, 'em andamento', '2025-09-19 11:45:00'),
+('Chamado 19-09 L3', 'Limpeza pós-obra', 2, 2, 6, 'pendente', '2025-09-19 12:30:00');
 
 -- ============================
--- 20/08 - 15 chamados (dia muito pesado)
+-- 20/09 - 15 chamados (dia muito pesado)
 -- ============================
 INSERT INTO chamados (titulo, descricao, tipo_id, tecnico_id, usuario_id, status, criado_em) VALUES
-('Chamado 20-08 M1', 'Manutenção predial', 1, 2, 4, 'pendente', '2025-08-20 07:45:00'),
-('Chamado 20-08 L1', 'Limpeza rotina', 2, 2, 5, 'em andamento', '2025-08-20 08:00:00'),
-('Chamado 20-08 AT1', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-08-20 08:25:00'),
-('Chamado 20-08 M2', 'Manutenção elétrica', 1, 2, 6, 'em andamento', '2025-08-20 08:55:00'),
-('Chamado 20-08 L2', 'Limpeza pesada', 2, 2, 4, 'pendente', '2025-08-20 09:15:00'),
-('Chamado 20-08 AT2', 'Configuração de sistema', 3, 3, 5, 'em andamento', '2025-08-20 09:40:00'),
-('Chamado 20-08 E1', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-08-20 10:10:00'),
-('Chamado 20-08 L3', 'Limpeza pós-obra', 2, 2, 6, 'pendente', '2025-08-20 10:45:00'),
-('Chamado 20-08 M3', 'Revisão hidráulica', 1, 2, 5, 'em andamento', '2025-08-20 11:20:00'),
-('Chamado 20-08 AT3', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-08-20 11:55:00'),
-('Chamado 20-08 L4', 'Limpeza rotina', 2, 2, 4, 'em andamento', '2025-08-20 12:25:00'),
-('Chamado 20-08 M4', 'Manutenção predial', 1, 2, 6, 'pendente', '2025-08-20 12:50:00'),
-('Chamado 20-08 AT4', 'Configuração de sistema', 3, 3, 5, 'em andamento', '2025-08-20 13:30:00'),
-('Chamado 20-08 E2', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-08-20 14:05:00'),
-('Chamado 20-08 L5', 'Limpeza pesada', 2, 2, 6, 'em andamento', '2025-08-20 14:40:00');
+('Chamado 20-09 M1', 'Manutenção predial', 1, 2, 4, 'pendente', '2025-09-20 07:45:00'),
+('Chamado 20-09 L1', 'Limpeza rotina', 2, 2, 5, 'em andamento', '2025-09-20 09:00:00'),
+('Chamado 20-09 AT1', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-09-20 09:25:00'),
+('Chamado 20-09 M2', 'Manutenção elétrica', 1, 2, 6, 'em andamento', '2025-09-20 09:55:00'),
+('Chamado 20-09 L2', 'Limpeza pesada', 2, 2, 4, 'pendente', '2025-09-20 09:15:00'),
+('Chamado 20-09 AT2', 'Configuração de sistema', 3, 3, 5, 'em andamento', '2025-09-20 09:40:00'),
+('Chamado 20-09 E1', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-09-20 10:10:00'),
+('Chamado 20-09 L3', 'Limpeza pós-obra', 2, 2, 6, 'pendente', '2025-09-20 10:45:00'),
+('Chamado 20-09 M3', 'Revisão hidráulica', 1, 2, 5, 'em andamento', '2025-09-20 11:20:00'),
+('Chamado 20-09 AT3', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-09-20 11:55:00'),
+('Chamado 20-09 L4', 'Limpeza rotina', 2, 2, 4, 'em andamento', '2025-09-20 12:25:00'),
+('Chamado 20-09 M4', 'Manutenção predial', 1, 2, 6, 'pendente', '2025-09-20 12:50:00'),
+('Chamado 20-09 AT4', 'Configuração de sistema', 3, 3, 5, 'em andamento', '2025-09-20 13:30:00'),
+('Chamado 20-09 E2', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-09-20 14:05:00'),
+('Chamado 20-09 L5', 'Limpeza pesada', 2, 2, 6, 'em andamento', '2025-09-20 14:40:00');
 
 -- ============================
--- 21/08 - 4 chamados (leve)
+-- 21/09 - 4 chamados (leve)
 -- ============================
 INSERT INTO chamados (titulo, descricao, tipo_id, tecnico_id, usuario_id, status, criado_em) VALUES
-('Chamado 21-08 M1', 'Manutenção elétrica', 1, 2, 4, 'pendente', '2025-08-21 08:00:00'),
-('Chamado 21-08 AT1', 'Suporte remoto', 3, 3, 5, 'em andamento', '2025-08-21 09:15:00'),
-('Chamado 21-08 L1', 'Limpeza rotina', 2, 2, 6, 'concluido', '2025-08-21 10:30:00'),
-('Chamado 21-08 E1', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-08-21 11:50:00');
+('Chamado 21-09 M1', 'Manutenção elétrica', 1, 2, 4, 'pendente', '2025-08-21 08:00:00'),
+('Chamado 21-09 AT1', 'Suporte remoto', 3, 3, 5, 'em andamento', '2025-08-21 09:15:00'),
+('Chamado 21-09 L1', 'Limpeza rotina', 2, 2, 6, 'concluido', '2025-09-21 10:30:00'),
+('Chamado 21-09 E1', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-09-21 11:50:00');
 
 -- ============================
--- 22/08 - 10 chamados (dia médio)
+-- 22/09 - 10 chamados (dia médio)
 -- ============================
 INSERT INTO chamados (titulo, descricao, tipo_id, tecnico_id, usuario_id, status, criado_em) VALUES
-('Chamado 22-08 M1', 'Manutenção predial', 1, 2, 4, 'pendente', '2025-08-22 07:40:00'),
-('Chamado 22-08 L1', 'Limpeza rotina', 2, 2, 5, 'em andamento', '2025-08-22 08:05:00'),
-('Chamado 22-08 AT1', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-08-22 08:30:00'),
-('Chamado 22-08 M2', 'Revisão hidráulica', 1, 2, 6, 'pendente', '2025-08-22 09:05:00'),
-('Chamado 22-08 L2', 'Limpeza pesada', 2, 2, 4, 'em andamento', '2025-08-22 09:40:00'),
-('Chamado 22-08 AT2', 'Configuração de sistema', 3, 3, 5, 'em andamento', '2025-08-22 10:15:00'),
-('Chamado 22-08 E1', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-08-22 10:50:00'),
-('Chamado 22-08 L3', 'Limpeza pós-obra', 2, 2, 6, 'em andamento', '2025-08-22 11:20:00'),
-('Chamado 22-08 M3', 'Manutenção predial', 1, 2, 5, 'pendente', '2025-08-22 11:50:00'),
-('Chamado 22-08 AT3', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-08-22 12:25:00');
+('Chamado 22-09 M1', 'Manutenção predial', 1, 2, 4, 'pendente', '2025-09-22 07:40:00'),
+('Chamado 22-09 L1', 'Limpeza rotina', 2, 2, 5, 'em andamento', '2025-09-22 09:05:00'),
+('Chamado 22-09 AT1', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-09-22 09:30:00'),
+('Chamado 22-09 M2', 'Revisão hidráulica', 1, 2, 6, 'pendente', '2025-09-22 09:05:00'),
+('Chamado 22-09 L2', 'Limpeza pesada', 2, 2, 4, 'em andamento', '2025-09-22 09:40:00'),
+('Chamado 22-09 AT2', 'Configuração de sistema', 3, 3, 5, 'em andamento', '2025-09-22 10:15:00'),
+('Chamado 22-09 E1', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-09-22 10:50:00'),
+('Chamado 22-09 L3', 'Limpeza pós-obra', 2, 2, 6, 'em andamento', '2025-09-22 11:20:00'),
+('Chamado 22-09 M3', 'Manutenção predial', 1, 2, 5, 'pendente', '2025-09-22 11:50:00'),
+('Chamado 22-09 AT3', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-09-22 12:25:00');

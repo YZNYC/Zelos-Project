@@ -5,7 +5,7 @@
     { title: "Visão geral", link: "/dashBoard" },
     { title: "Chamados", link: "/Chamados" },
     { title: "Relatórios", link: "/Relatorios" },
-    { title: "Técnicos", link: "/RotaAluno" },
+    { title: "Técnicos", link: "/Tecnicos" },
     { title: "Configurações", link: "/Configuracoes" },
   ];
 
