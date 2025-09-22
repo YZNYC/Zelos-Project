@@ -89,7 +89,6 @@ export default function Configuracoes() {
           <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Linguagem</h2>
           <select className="w-full p-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 cursor-pointer">
             <option>Português</option>
-            <option>English</option>
           </select>
         </div>
 
