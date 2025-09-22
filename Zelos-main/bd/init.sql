@@ -1,4 +1,4 @@
- DROP DATABASE zelo;
+DROP DATABASE IF EXISTS zelo;
     CREATE DATABASE zelo;
     USE zelo;
     
@@ -190,3 +190,30 @@ SELECT * FROM usuarios;
 UPDATE usuarios
 set funcao = 'tecnico'
 where id = 8;
+-- ============================
+-- Inserindo apontamentos para os relatórios (chamados concluídos)
+-- ============================
+INSERT INTO apontamentos (chamado_id, tecnico_id, descricao, comeco, fim) VALUES
+-- Apontamentos para o Chamado 3 (concluído)
+(3, 2, 'Iniciada verificação do sistema de ar condicionado.', '2025-09-16 11:15:00', '2025-09-16 12:00:00'),
+(3, 2, 'Filtros limpos e sistema testado. Chamado finalizado.', '2025-09-16 12:00:00', '2025-09-16 12:30:00'),
+(3, 1, 'Relatório verificado pelo admin.', '2025-09-16 15:00:00', '2025-09-16 15:05:00'),
+-- Apontamentos para o Chamado 6 (concluído)
+(6, 3, 'Acesso remoto realizado para configuração de impressora.', '2025-09-17 09:45:00', '2025-09-17 10:15:00'),
+(6, 3, 'Impressora configurada e funcionando. Chamado concluído.', '2025-09-17 10:15:00', '2025-09-17 10:20:00'),
+-- Apontamentos para o Chamado 13 (concluído)
+(13, 3, 'Atendimento remoto para resolver problema de login.', '2025-09-17 12:40:00', '2025-09-17 13:00:00'),
+-- Apontamentos para o Chamado 16 (concluído)
+(16, 3, 'Suporte para instalação de software X.', '2025-09-19 09:40:00', '2025-09-19 10:00:00'),
+(16, 3, 'Software instalado e validado pelo usuário.', '2025-09-19 10:00:00', '2025-09-19 10:10:00'),
+-- Apontamentos para o Chamado 18 (concluído)
+(18, 3, 'Conexão remota estabelecida. Verificando logs do sistema.', '2025-09-20 09:25:00', '2025-09-20 09:45:00'),
+(18, 3, 'Problema identificado e corrigido. Sistema normalizado.', '2025-09-20 09:45:00', '2025-09-20 09:55:00'),
+-- Apontamentos para o Chamado 22 (concluído)
+(22, 2, 'Limpeza de rotina executada no setor administrativo.', '2025-09-21 10:30:00', '2025-09-21 11:30:00'),
+-- Apontamentos para o Chamado 23 (concluído)
+(23, 3, 'Reset de senha solicitado pelo usuário.', '2025-09-22 09:30:00', '2025-09-22 09:35:00'),
+-- Apontamentos para o Chamado 24 (concluído)
+(24, 3, 'Atendimento remoto para dúvida sobre o sistema X.', '2025-09-22 12:25:00', '2025-09-22 12:40:00'),
+(24, 3, 'Dúvida esclarecida. Finalizando chamado.', '2025-09-22 12:40:00', '2025-09-22 12:45:00');
+

@@ -4,7 +4,7 @@ import CardShell from "./CardShell";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
 // Cores Zelos: vermelho, azul claro e azul escuro
-const COLORS = ["#ED1C24", "#335BFF", "#001F54"];
+const COLORS = ["#ED1C24", "#335BFF", "#001F54", "#2c2c2c"];
 
 // Função pra mapear títulos
 function formatTitulo(titulo) {
