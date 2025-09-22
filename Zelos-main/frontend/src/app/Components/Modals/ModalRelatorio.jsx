@@ -67,7 +67,7 @@ export default function ModalRelatorio({ relatorio, apontamentos, onAddApontamen
           <div className="space-y-3 h-full pr-2">
             {apontamentos.map((a, i) => (
               <div key={i} className="bg-gray-300 p-3 rounded">
-                <p><strong>Administrador:</strong> Nome do administrador</p>
+                <p><strong>ADMIN:</strong> NYCOLAS DE LIMA LEANDRO</p>
                 <p><strong>Texto:</strong> {a}</p>
               </div>
             ))}
