@@ -185,3 +185,8 @@ INSERT INTO chamados (titulo, descricao, tipo_id, tecnico_id, usuario_id, status
 
 
 SELECT * FROM usuarios;
+
+
+UPDATE usuarios
+set funcao = 'tecnico'
+where id = 8;

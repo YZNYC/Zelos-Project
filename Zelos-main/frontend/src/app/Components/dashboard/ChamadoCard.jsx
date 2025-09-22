@@ -24,7 +24,6 @@ export default function ChamadoCard({ chamado, onClick }) {
   const tipoNome = chamado.tipo_nome || '-'; // O backend já deve enviar formatado
   const tecnicoNome = chamado.tecnico_nome || '-';
   const dataCriacao = chamado.criado_em || '-';
-  const prioridade = chamado.prioridade || 'Baixa'; // Usar prioridade que vem do backend
 
   return (
     <div
@@ -35,10 +34,6 @@ export default function ChamadoCard({ chamado, onClick }) {
         {/* Status */}
         <div className={`inline-block px-3 py-1 text-sm font-semibold rounded-full ${statusColor[chamado.status] || 'bg-gray-200 text-gray-800'}`}>
           {chamado.status.charAt(0).toUpperCase() + chamado.status.slice(1)}
-        </div>
-        {/* Prioridade */}
-        <div className={`inline-block px-3 py-1 text-sm font-semibold rounded-full border ${priorityColor[prioridade]} border-${priorityColor[prioridade].split('-')[1]}-400`}>
-          {prioridade}
         </div>
       </div>
 
