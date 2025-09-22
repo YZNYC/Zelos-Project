@@ -79,8 +79,8 @@
 -- ============================
 INSERT INTO usuarios (nome, numeroUsuario, funcao) VALUES
 ('Admin 1', 'admin1', 'admin'),
-('Tecnico 1', 'tec1', 'tecnico'),
-('Tecnico 2', 'tec2', 'tecnico'),
+('José da Silva', 'tec1', 'tecnico'),
+('Ronaldo', 'tec2', 'tecnico'),
 ('Usuario 1', 'usu1', 'usuario'),
 ('Usuario 2', 'usu2', 'usuario'),
 ('Usuario 3', 'usu3', 'usuario');
@@ -182,3 +182,6 @@ INSERT INTO chamados (titulo, descricao, tipo_id, tecnico_id, usuario_id, status
 ('Chamado 22-09 L3', 'Limpeza pós-obra', 2, 2, 6, 'em andamento', '2025-09-22 11:20:00'),
 ('Chamado 22-09 M3', 'Manutenção predial', 1, 2, 5, 'pendente', '2025-09-22 11:50:00'),
 ('Chamado 22-09 AT3', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-09-22 12:25:00');
+
+
+SELECT * FROM usuarios;
