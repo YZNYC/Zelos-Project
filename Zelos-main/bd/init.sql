@@ -16,7 +16,7 @@ DROP DATABASE IF EXISTS zelo;
     -- Criação da tabela `pool` usada para os chamados
     CREATE TABLE pool (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        titulo ENUM('manutencao', 'apoio_tecnico', 'limpeza') NOT NULL,
+        titulo ENUM('externo', 'manutencao', 'apoio_tecnico', 'limpeza') NOT NULL,
         descricao TEXT,
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
         criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
