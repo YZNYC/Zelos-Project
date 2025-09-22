@@ -3,12 +3,18 @@
 import CardShell from "./CardShell";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
-// Cores Zelos: vermelho, azul claro e azul escuro
-const COLORS = ["#ED1C24", "#335BFF", "#001F54", "#2c2c2c"];
+// 1. Mapeia o nome da categoria para uma cor específica
+const COLOR_MAP = {
+  manutencao: "#ED1C24", // Vermelho
+  limpeza: "#335BFF", // Azul Claro
+  apoio_tecnico: "#03307d", // Azul Escuro (TI)
+  externo: "#2c2c2c", // Cinza Escuro
+};
 
-// Função pra mapear títulos
+// Função para formatar os títulos para exibição
 function formatTitulo(titulo) {
   if (titulo === "apoio_tecnico") return "TI";
+  if (!titulo) return "";
   return titulo.charAt(0).toUpperCase() + titulo.slice(1); // "Manutencao", "Limpeza"
 }
 
@@ -35,8 +41,9 @@ export default function CardChartPie({ title = "Chamados por tipo", data = [] })
                 outerRadius={70}
                 paddingAngle={4}
               >
-                {data.map((_, i) => (
-                  <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                {/* 2. Usa o mapa de cores para preencher cada célula */}
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLOR_MAP[entry.name] || '#CCCCCC'} />
                 ))}
               </Pie>
               <Tooltip
@@ -52,7 +59,8 @@ export default function CardChartPie({ title = "Chamados por tipo", data = [] })
             <div key={i} className="flex items-center gap-2">
               <span
                 className="inline-block w-3 h-3 rounded-full"
-                style={{ backgroundColor: COLORS[i % COLORS.length] }}
+                // 3. Usa o mapa de cores também para a legenda
+                style={{ backgroundColor: COLOR_MAP[d.name] || '#CCCCCC' }}
               />
               <span className="text-sm text-gray-700">{formatTitulo(d.name)}</span>
             </div>
@@ -62,3 +70,4 @@ export default function CardChartPie({ title = "Chamados por tipo", data = [] })
     </CardShell>
   );
 }
+
