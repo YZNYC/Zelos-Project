@@ -9,8 +9,7 @@ export default function Layout({ children }) {
   return (
     <div>
       <Header onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} funcao={funcao} />
-
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       {/* Mantém margem esquerda só para desktop */}
       <main className="pt-[88px] ml-0 sm:ml-[22.5rem]">{children}</main>
     </div>
