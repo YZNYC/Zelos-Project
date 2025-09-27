@@ -9,9 +9,12 @@ import CardStat from "../Components/dashboard/CardStat";
 import CardChartPie from "../Components/dashboard/CardChartPie";
 import CardChartLine from "../Components/dashboard/CardChartLine";
 import CardTableRecent from "../Components/dashboard/CardTableRecent";
+import useAuth from "../Hooks/useAuth";
 
 export default function DashBoard() {
+  const { user, loading } = useAuth();
   const router = useRouter();
+
   const [counters, setCounters] = useState(null);
   const [pieData, setPieData] = useState([]);
   const [lineData, setLineData] = useState([]);
@@ -19,13 +22,14 @@ export default function DashBoard() {
   const [funcao, setfuncao] = useState(null);
   const [userId, setUserId] = useState(null);
 
+  // Redireciona para página inicial se não estiver logado, somente quando loading terminar
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       router.push("/");
       return;
     }
-
+  }, [loading, user, router]);
     const decoded = jwt_decode(token);
     setfuncao(decoded.funcao); // admin | tecnico | user
     setUserId(decoded.id);  // id do usuário logado
@@ -52,6 +56,7 @@ export default function DashBoard() {
           filteredRecent = resRecent.data.filter(c => c.userId === decoded.id);
         }
 
+
         setCounters(resCounters.data);
         setPieData(resPie.data);
         setLineData(resLine.data);
@@ -60,13 +65,14 @@ export default function DashBoard() {
         console.error("Erro ao carregar dados do dashboard:", error);
         if (error.response?.status === 401) {
           localStorage.removeItem("token");
-          router.push("/");
+          localStorage.removeItem("user");
+          router.replace("/"); // redireciona para login
         }
       }
     };
 
-    fetchData();
-  }, [router]);
+    fetchDashboardData();
+  }, [user, router]);
 
   const handleUpdateStatus = async (chamadoId, novoStatus) => {
     if (funcao !== "tecnico") return;
@@ -89,9 +95,8 @@ export default function DashBoard() {
   if (!counters) return <div className="p-4">Carregando...</div>;
 
   return (
-    <main className="ml-0 mt-[88px] sm:mt-[165px] p-4 overflow-y-auto">
+    <main className="ml-0 mt-[88px] sm:mt-[80px] p-4 overflow-y-auto">
       <div className="grid grid-cols-12 gap-6">
-
         {/* Estatísticas */}
         <div className="col-span-12 grid grid-cols-12 gap-6">
           <div className="col-span-12 sm:col-span-6 xl:col-span-3">
@@ -114,7 +119,6 @@ export default function DashBoard() {
             <CardStat title="Tempo médio de resolução" value={counters.tempoMedioHoras} suffix="h" />
           </div>
         </div>
-
         {/* Gráficos */}
         {(funcao === "admin" || funcao === "tecnico") && (
           <div className="col-span-12 xl:col-span-4 min-h-[300px]">

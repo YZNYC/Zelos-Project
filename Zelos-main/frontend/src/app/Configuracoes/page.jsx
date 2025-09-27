@@ -42,8 +42,8 @@ export default function Configuracoes() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8 transition-colors duration-300">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8 transition-colors duration-300 ">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100 mt-30">
         Configurações
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -89,7 +89,6 @@ export default function Configuracoes() {
           <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Linguagem</h2>
           <select className="w-full p-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 cursor-pointer">
             <option>Português</option>
-            <option>English</option>
           </select>
         </div>
 

@@ -12,7 +12,7 @@ export default function CardTableRecent({ title = "Chamados recentes", rows = []
     <CardShell title={title} className="h-[460px]">
       <div className="h-[380px] overflow-y-auto pr-2">
         <table className="w-full text-sm">
-          <thead className="sticky top-0 bg-white z-10">
+          <thead className="sticky top-0 bg-gray-100 z-10">
             <tr className="text-gray-500 border-b">
               <th className="py-2 text-left font-medium">Protocolo</th>
               <th className="py-2 text-left font-medium">Descrição</th>
@@ -35,6 +35,7 @@ export default function CardTableRecent({ title = "Chamados recentes", rows = []
                         r.status === "pendente"
                           ? "bg-red-100 text-[#ED1C24]"
                           : r.status === "em andamento"
+
                           ? "bg-yellow-100 text-yellow-700"
                           : "bg-green-100 text-green-700"
                       }`}
