@@ -112,8 +112,16 @@ export default function LoginPage() {
       const res = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: numeroUsuario, password: senha }),
+        body: JSON.stringify({
+          numeroUsuario, // para login local
+          senha,         // para login local
+          username: numeroUsuario, // para LDAP
+          password: senha          // para LDAP
+        }),
       });
+
+      
+
 
       const data = await res.json();
 

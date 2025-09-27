@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-const MENUS = [
+const ALL_MENUS = [
   { title: "Visão geral", link: "/dashBoard" },
   { title: "Chamados", link: "/Chamados" },
   { title: "Relatórios", link: "/Relatorios" },
@@ -9,17 +9,26 @@ const MENUS = [
   { title: "Configurações", link: "/Configuracoes" },
 ];
 
-const SIDEBAR_WIDTH_REM = 22.5; // 22.5rem (equiv. ao seu w-90)
+const SIDEBAR_WIDTH_REM = 22.5;
 
-export default function Sidebar({ open, onClose }) {
+export default function Sidebar({ open, onClose, funcao }) {
+  // Filtra menus de acordo com a função
+  const MENUS = ALL_MENUS.filter(menu => {
+    if (funcao === "admin") return true; // admin vê tudo
+    if (funcao === "tecnico") return ["Visão geral", "Chamados", "Relatórios", "Configurações"].includes(menu.title);
+    if (funcao === "user") return ["Visão geral", "Chamados", "Relatórios"].includes(menu.title);
+    return false;
+  });
+
   return (
     <>
-      {/* Overlay no mobile */}
+      {/* Overlay mobile */}
       <div
         className={`fixed inset-0 z-40 bg-black/40 sm:hidden transition-opacity ${open ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         onClick={onClose}
       />
 
+      {/* Sidebar desktop */}
       <aside
         className={`fixed bottom-0 left-0 z-50 h-[calc(100%-165px)] sm:flex hidden flex-col justify-between p-5 pt-8`}
         style={{ backgroundColor: "#002F6C", width: `${SIDEBAR_WIDTH_REM}rem` }}
