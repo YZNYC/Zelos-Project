@@ -42,7 +42,7 @@ export default function Configuracoes() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8 transition-colors duration-300">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8 transition-colors duration-300 overflow-hidden">
       <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100 mt-10">
         Configurações
       </h1>
@@ -111,13 +111,6 @@ export default function Configuracoes() {
         </div>
 
       </div>
-
-      <ModalEditarConta
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onSave={handleSaveUser}
-        user={user}
-      />
     </div>
   );
 }
