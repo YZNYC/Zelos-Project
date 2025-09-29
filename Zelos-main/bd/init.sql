@@ -27,52 +27,50 @@ DROP DATABASE IF EXISTS zelo;
         FOREIGN KEY (updated_by) REFERENCES usuarios(id)
     );
 
-    -- Criação da tabela `chamados` associando
-    CREATE TABLE chamados (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        titulo VARCHAR(255) NOT NULL,
-        descricao TEXT NOT NULL,
-        tipo_id INT,
-        tecnico_id INT,
-        usuario_id INT,
-        status ENUM('pendente', 'em andamento', 'concluido') DEFAULT 'pendente',
-        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        FOREIGN KEY (tipo_id) REFERENCES pool(id),
-        FOREIGN KEY (tecnico_id) REFERENCES usuarios(id),
-        FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-    );
+-- Criação da tabela `chamados` associando
+CREATE TABLE chamados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT NOT NULL,
+    tipo_id INT,
+    tecnico_id INT,
+    usuario_id INT,
+    status ENUM('pendente', 'em andamento', 'concluido') DEFAULT 'pendente',
+    prioridade ENUM('Baixa', 'Média', 'Alta') DEFAULT 'Baixa', -- ADICIONADO: Coluna prioridade
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (tipo_id) REFERENCES pool(id),
+    FOREIGN KEY (tecnico_id) REFERENCES usuarios(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
 
-    -- Criação da tabela `apontamentos`
-    CREATE TABLE apontamentos (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        chamado_id INT,
-        tecnico_id INT,
-        descricao TEXT,
-        comeco DATETIME NOT NULL,
-        fim DATETIME NOT NULL,
-        duracao INT AS (TIMESTAMPDIFF(SECOND, comeco, fim)) STORED, -- Calcula a duração em segundos
-        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (chamado_id) REFERENCES chamados(id),	
-        FOREIGN KEY (tecnico_id) REFERENCES usuarios(id)
-    );
+-- Criação da tabela `apontamentos`
+CREATE TABLE apontamentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    chamado_id INT,
+    tecnico_id INT,
+    descricao TEXT,
+    comeco DATETIME NOT NULL,
+    fim DATETIME NOT NULL,
+    duracao INT AS (TIMESTAMPDIFF(SECOND, comeco, fim)) STORED, -- Calcula a duração em segundos
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (chamado_id) REFERENCES chamados(id),
+    FOREIGN KEY (tecnico_id) REFERENCES usuarios(id)
+);
 
-    -- Criação da tabela `pool_tecnico`
-    CREATE TABLE pool_tecnico (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        id_pool INT,
-        id_tecnico INT,
-        FOREIGN KEY (id_pool) REFERENCES pool(id),
-        FOREIGN KEY (id_tecnico) REFERENCES usuarios(id)
-    );
+-- Criação da tabela `pool_tecnico`
+CREATE TABLE pool_tecnico (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_pool INT,
+    id_tecnico INT,
+    FOREIGN KEY (id_pool) REFERENCES pool(id),
+    FOREIGN KEY (id_tecnico) REFERENCES usuarios(id)
+);
 
-    -- Índices adicionais para otimização
-    CREATE INDEX idx_usuarios_numero ON usuarios(numeroUsuario);
-    CREATE INDEX idx_chamados_status ON chamados(status);
-    CREATE INDEX idx_apontamentos_comeco_fim ON apontamentos(comeco, fim);
-    
-    SELECT * FROM usuarios;
-
+-- Índices adicionais para otimização
+CREATE INDEX idx_usuarios_numero ON usuarios(numeroUsuario);
+CREATE INDEX idx_chamados_status ON chamados(status);
+CREATE INDEX idx_apontamentos_comeco_fim ON apontamentos(comeco, fim);
 
 -- ============================
 -- Inserindo usuários
@@ -86,13 +84,25 @@ INSERT INTO usuarios (nome, numeroUsuario, funcao) VALUES
 ('Usuario 3', 'usu3', 'usuario');
 
 -- ============================
--- Popula a tabela pool (tipos de chamados)
+-- Popula a tabela pool (tipos de chamados) - Garantindo que os IDs correspondam aos inserts abaixo
+-- ID 1: manutencao
+-- ID 2: limpeza
+-- ID 3: apoio_tecnico
+-- ID 4: externo
 -- ============================
 INSERT INTO pool (titulo, descricao, status, created_by, updated_by) VALUES
-('manutencao', 'Manutenção predial', 'ativo', 1, 1),
-('limpeza', 'Limpeza pesada', 'ativo', 1, 1),
-('apoio_tecnico', 'Suporte remoto', 'ativo', 1, 1),
-('externo', 'Consultoria externa', 'ativo', 1, 1);
+('manutencao', 'Manutenção predial e de equipamentos', 'ativo', 1, 1),
+('limpeza', 'Serviços de limpeza e higienização', 'ativo', 1, 1),
+('apoio_tecnico', 'Suporte técnico e configuração de sistemas', 'ativo', 1, 1),
+('externo', 'Consultoria e serviços externos especializados', 'ativo', 1, 1);
+
+-- ============================
+-- Inserindo Chamados com tipo_id e prioridade
+-- Considerando:
+-- Tecnico 1 (ID 2), Tecnico 2 (ID 3)
+-- Usuario 1 (ID 4), Usuario 2 (ID 5), Usuario 3 (ID 6)
+-- Tipos: 1=manutencao, 2=limpeza, 3=apoio_tecnico, 4=externo
+-- ============================
 
 -- ============================
 -- 16/09 - 3 chamados (dia leve)
