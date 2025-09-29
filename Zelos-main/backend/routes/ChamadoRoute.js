@@ -20,4 +20,3 @@ router.get("/tecnicos", getTecnicos);
 router.get("/tipos", getTipos); 
 
 export default router;
-
