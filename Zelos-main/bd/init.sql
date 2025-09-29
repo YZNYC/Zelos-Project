@@ -206,7 +206,7 @@ INSERT INTO chamados (titulo, descricao, tipo_id, tecnico_id, usuario_id, status
 ('Chamado 28-09 E1', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-09-28 10:50:00'),
 ('Chamado 28-09 L3', 'Limpeza pós-obra', 2, 2, 6, 'em andamento', '2025-09-28 11:20:00'),
 ('Chamado 28-09 M3', 'Manutenção predial', 1, 2, 5, 'pendente', '2025-09-28 11:50:00'),
-('Chamado 28-09 AT3', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-09-28 12:25:00');
+('Chamado 28-09 AT3', 'Suporte remoto', 3, 3, 6, 'concluido', '2025-09-28 12:25:00'),
 ('Chamado 28-09 E2', 'Consultoria externa', 4, 3, 4, 'pendente', '2025-09-28 10:50:00'),
 ('Chamado 28-09 L2', 'Limpeza pós-obra', 2, 2, 6, 'em andamento', '2025-09-28 11:20:00'),
 ('Chamado 28-09 M5', 'Manutenção predial', 1, 2, 5, 'pendente', '2025-09-28 11:50:00'),
